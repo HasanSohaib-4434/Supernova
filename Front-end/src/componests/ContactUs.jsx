@@ -7,9 +7,9 @@ const ContactUs = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    subject: '',
     message: ''
   });
+  const [formStatus, setFormStatus] = useState(null);
 
   const heroRef = useRef(null);
   const formRef = useRef(null);
@@ -21,13 +21,14 @@ const ContactUs = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  // Intersection Observer setup
+  // Intersection Observer setup for other sections (excluding form)
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setVisibleElements(prev => new Set([...prev, entry.target.id]));
+            console.log(`Element visible: ${entry.target.id}`); // Debugging log
           }
         });
       },
@@ -37,10 +38,9 @@ const ContactUs = () => {
       }
     );
 
-    // Observe sections
     const elementsToObserve = [
       heroRef.current,
-      formRef.current,
+      // formRef.current, // Exclude form to ensure immediate rendering
       infoRef.current,
       ctaRef.current
     ];
@@ -52,7 +52,6 @@ const ContactUs = () => {
       }
     });
 
-    // Observe individual cards
     const cards = document.querySelectorAll('.animate-on-scroll');
     cards.forEach(card => observer.observe(card));
 
@@ -71,12 +70,42 @@ const ContactUs = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  // Simulate form submission
-  const handleSubmit = () => {
-    console.log('Form submitted:', formData);
-    // Reset form
-    setFormData({ name: '', email: '', subject: '', message: '' });
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    // Basic validation
+    if (!formData.name || !formData.email || !formData.message) {
+      setFormStatus({ type: 'error', message: 'Please fill in all fields.' });
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:5000/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setFormStatus({ type: 'success', message: 'Message sent successfully!' });
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        setFormStatus({ type: 'error', message: 'Failed to send message. Please try again.' });
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setFormStatus({ type: 'error', message: 'An error occurred. Please try again later.' });
+    }
   };
+
+  // Debugging log to confirm form rendering
+  useEffect(() => {
+    console.log('Form section rendered. FormData:', formData);
+    console.log('Form ref:', formRef.current);
+  }, [formData]);
 
   const FloatingParticle = ({ delay = 0, size = 2, duration = 3 }) => (
     <div
@@ -91,7 +120,6 @@ const ContactUs = () => {
     />
   );
 
-  // Helper function to check if element is visible
   const isVisible = (elementId) => visibleElements.has(elementId);
 
   return (
@@ -166,7 +194,6 @@ const ContactUs = () => {
         .stagger-6 { transition-delay: 0.6s; }
       `}</style>
 
-      {/* Dynamic Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute inset-0">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-purple-600/20 to-blue-600/20 rounded-full filter blur-3xl animate-pulse" 
@@ -189,7 +216,6 @@ const ContactUs = () => {
 
       <Navbar />
 
-      {/* Hero Section */}
       <div ref={heroRef} className="relative z-10 flex flex-col items-center justify-center text-center text-white min-h-screen px-4 pt-20">
         <div 
           className={`text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-800 to-blue-800 bg-clip-text text-transparent animate-on-scroll ${isVisible('section-0') ? 'visible' : ''}`}
@@ -207,80 +233,77 @@ const ContactUs = () => {
         </p>
       </div>
 
-      {/* Contact Form Section */}
       <div ref={formRef} className="relative z-10 py-20 px-4">
         <h2 
-          className={`text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-purple-800 to-blue-800 bg-clip-text text-transparent animate-on-scroll ${isVisible('section-1') ? 'visible' : ''}`}
+          className="text-4xl md:text-5xl font-bold text-center mb-16 text-white"
+          style={{ textShadow: '0 0 20px rgba(255, 255, 255, 0.7)' }}
         >
           Get in Touch
         </h2>
         
-        <div className="max-w-3xl mx-auto bg-gradient-to-br from-gray-900/50 to-blue-900/50 backdrop-blur-md rounded-2xl p-8 border border-blue-600/30 animate-on-scroll stagger-1 card-hover">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label htmlFor="name" className="block text-gray-300 font-semibold mb-2">Name</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
+        <div className="max-w-3xl mx-auto bg-gradient-to-br from-gray-900/50 to-blue-900/50 backdrop-blur-md rounded-2xl p-8 border border-blue-600/30 card-hover">
+          {formStatus && (
+            <div className={`mb-4 text-center font-semibold ${formStatus.type === 'error' ? 'text-red-200 bg-red-900/50 p-2 rounded' : 'text-green-200 bg-green-900/50 p-2 rounded'}`}>
+              {formStatus.message}
+            </div>
+          )}
+          <form onSubmit={handleSubmit} method="POST">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label htmlFor="name" className="block text-white font-semibold mb-2">Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  className="w-full bg-gray-800 border border-blue-600/30 rounded-lg p-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all"
+                  placeholder="Your Name"
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="email" className="block text-white font-semibold mb-2">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  className="w-full bg-gray-800 border border-blue-600/30 rounded-lg p-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all"
+                  placeholder="Your Email"
+                  required
+                />
+              </div>
+            </div>
+            <div className="mt-6">
+              <label htmlFor="message" className="block text-white font-semibold mb-2">Message</label>
+              <textarea
+                id="message"
+                name="message"
+                value={formData.message}
                 onChange={handleInputChange}
-                className="w-full bg-gray-900/50 border border-blue-600/30 rounded-lg p-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all"
-                placeholder="Your Name"
+                className="w-full bg-gray-800 border border-blue-600/30 rounded-lg p-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all"
+                rows="5"
+                placeholder="Your Message"
+                required
               />
             </div>
-            <div>
-              <label htmlFor="email" className="block text-gray-300 font-semibold mb-2">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                className="w-full bg-gray-900/50 border border-blue-600/30 rounded-lg p-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all"
-                placeholder="Your Email"
-              />
+            <div className="mt-8 text-center">
+              <button
+                type="submit"
+                className="bg-gradient-to-r from-purple-700 to-blue-700 hover:from-purple-800 hover:to-blue-800 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 animate-glow"
+              >
+                Send Message
+              </button>
             </div>
-          </div>
-          <div className="mt-6">
-            <label htmlFor="subject" className="block text-gray-300 font-semibold mb-2">Subject</label>
-            <input
-              type="text"
-              id="subject"
-              name="subject"
-              value={formData.subject}
-              onChange={handleInputChange}
-              className="w-full bg-gray-900/50 border border-blue-600/30 rounded-lg p-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all"
-              placeholder="Subject"
-            />
-          </div>
-          <div className="mt-6">
-            <label htmlFor="message" className="block text-gray-300 font-semibold mb-2">Message</label>
-            <textarea
-              id="message"
-              name="message"
-              value={formData.message}
-              onChange={handleInputChange}
-              className="w-full bg-gray-900/50 border border-blue-600/30 rounded-lg p-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all"
-              rows="5"
-              placeholder="Your Message"
-            />
-          </div>
-          <div className="mt-8 text-center">
-            <button
-              onClick={handleSubmit}
-              className="bg-gradient-to-r from-purple-700 to-blue-700 hover:from-purple-800 hover:to-blue-800 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 animate-glow"
-            >
-              Send Message
-            </button>
-          </div>
+          </form>
         </div>
       </div>
 
-      {/* Contact Info Section */}
       <div ref={infoRef} className="relative z-10 py-20 px-4 bg-gradient-to-r from-purple-900/20 to-blue-900/20">
         <h2 
-          className={`text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-purple-800 to-blue-800 bg-clip-text text-transparent animate-on-scroll ${isVisible('section-2') ? 'visible' : ''}`}
+          className={`text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-purple-800 to-blue-800 bg-clip-text text-transparent animate-on-scroll ${isVisible('section-1') ? 'visible' : ''}`}
         >
           Contact Information
         </h2>
@@ -309,7 +332,7 @@ const ContactUs = () => {
             <div
               key={index}
               id={`info-${index}`}
-              className={`bg-gradient-to-br from-gray-900/50 to-blue-900/50 backdrop-blur-md rounded-2xl p-6 text-white text-center border border-blue-600/30 card-hover animate-on-scroll stagger-${index + 1} ${isVisible('section-2') ? 'visible' : ''}`}
+              className={`bg-gradient-to-br from-gray-900/50 to-blue-900/50 backdrop-blur-md rounded-2xl p-6 text-white text-center border border-blue-600/30 card-hover animate-on-scroll stagger-${index + 1} ${isVisible('section-1') ? 'visible' : ''}`}
             >
               <div className="text-4xl mb-4">{info.icon}</div>
               <h3 className="text-xl font-bold mb-2 text-gray-300">{info.title}</h3>
@@ -325,10 +348,9 @@ const ContactUs = () => {
         </div>
       </div>
 
-      {/* Call to Action Section */}
       <div ref={ctaRef} className="relative z-10 py-20 px-4">
         <div 
-          className={`max-w-4xl mx-auto text-center text-white animate-on-scroll ${isVisible('section-3') ? 'visible' : ''}`}
+          className={`max-w-4xl mx-auto text-center text-white animate-on-scroll ${isVisible('section-2') ? 'visible' : ''}`}
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-800 to-blue-800 bg-clip-text text-transparent">
             Ready to Transform Your Business?
@@ -342,7 +364,6 @@ const ContactUs = () => {
         </div>
       </div>
 
-      {/* Footer */}
       <footer className="relative z-10 bg-gradient-to-r from-purple-900/30 to-blue-900/30 backdrop-blur-md text-center text-white py-12 border-t border-blue-600/30">
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
