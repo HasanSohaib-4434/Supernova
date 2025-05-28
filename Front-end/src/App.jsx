@@ -7,17 +7,24 @@ import ContactUs from '../src/componests/ContactUs';
 import Testimonials from '../src/componests/Testimonials';
 import Location from '../src/componests/Location';
 
+
 function ScrollToTop() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    // Reset scroll position to top
-    window.scrollTo({ top: 0, behavior: 'auto' });
-
-    // Disable browser's default scroll restoration
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
     }
+
+    const scrollToTop = () => {
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    };
+
+    const timer = setTimeout(() => {
+      requestAnimationFrame(scrollToTop);
+    }, 0);
+
+    return () => clearTimeout(timer);
   }, [pathname]);
 
   return null;

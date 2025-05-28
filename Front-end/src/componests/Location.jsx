@@ -9,10 +9,10 @@ const Location = () => {
   const locationRef = useRef(null);
   const ctaRef = useRef(null);
 
-  // Scroll to top when component mounts
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  // // Scroll to top when component mounts
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, []);
 
   // Intersection Observer setup
   useEffect(() => {

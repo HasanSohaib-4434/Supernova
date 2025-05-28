@@ -17,10 +17,10 @@ const Home = () => {
 
   const services = ["Google My Business", "Graphic Designing", "Search Engine Optimization", "AI-Driven Marketing", "Digital Transformation"];
 
-  // Scroll to top when component mounts
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  // // Scroll to top when component mounts
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, []);
 
   // Intersection Observer setup
   useEffect(() => {
