@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Navbar from '../Navbar.jsx';
+import Footer from '../Footer.jsx';
 
 const AIMarketingAutomation = () => {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ const AIMarketingAutomation = () => {
       <style jsx>{`
         @keyframes float {
           0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(180deg); }
+          50% { transform: translateY(-20px) rotate(360deg); }
         }
         @keyframes pulse {
           0%, 100% { opacity: 0.5; transform: scale(1); }
@@ -87,37 +88,7 @@ const AIMarketingAutomation = () => {
         </div>
       </div>
 
-      <footer className="relative z-10 bg-gradient-to-r from-purple-900/30 to-blue-900/30 backdrop-blur-md text-center text-white py-16 border-t border-blue-600/30">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-            <div>
-              <h4 className="text-xl font-bold mb-4 text-white">Quick Links</h4>
-              <div className="space-y-2">
-                <p className="hover:text-blue-400 cursor-pointer transition-colors duration-200">Privacy Policy</p>
-                <p className="hover:text-blue-400 cursor-pointer transition-colors duration-200">Terms & Conditions</p>
-                <p className="hover:text-blue-400 cursor-pointer transition-colors duration-200">Refund Policy</p>
-              </div>
-            </div>
-            <div>
-              <h4 className="text-xl font-bold mb-4 text-white">Contact</h4>
-              <p className="text-lg font-semibold text-white mb-2">+1 (646) 930-4417</p>
-              <p className="text-gray-300">info@novatecsol.com</p>
-            </div>
-            <div>
-              <h4 className="text-xl font-bold mb-4 text-white">Follow Us</h4>
-              <div className="flex justify-center space-x-4">
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform duration-200">📘</a>
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform duration-200">📷</a>
-                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform duration-200">🐦</a>
-                <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform duration-200">📌</a>
-              </div>
-            </div>
-          </div>
-          <div className="border-t border-blue-600/30 pt-6">
-            <p className="text-gray-300 text-sm">© 2025 All Rights Reserved by Novatec Solutions</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };
