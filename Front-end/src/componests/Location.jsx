@@ -1,14 +1,17 @@
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import Navbar from './Navbar.jsx';
 import Footer from './Footer.jsx';
 
 const Location = () => {
   const [scrollY, setScrollY] = useState(0);
   const [visibleElements, setVisibleElements] = useState(new Set());
+  const [mapError, setMapError] = useState(false);
 
   const heroRef = useRef(null);
   const locationRef = useRef(null);
   const ctaRef = useRef(null);
+  const mapRef = useRef(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -25,13 +28,7 @@ const Location = () => {
       }
     );
 
-    // Observe sections
-    const elementsToObserve = [
-      heroRef.current,
-      locationRef.current,
-      ctaRef.current
-    ];
-
+    const elementsToObserve = [heroRef.current, locationRef.current, ctaRef.current];
     elementsToObserve.forEach((el, index) => {
       if (el) {
         el.id = `section-${index}`;
@@ -39,9 +36,13 @@ const Location = () => {
       }
     });
 
-    // Observe individual cards
     const cards = document.querySelectorAll('.animate-on-scroll');
     cards.forEach(card => observer.observe(card));
+
+    if (mapRef.current) {
+      mapRef.current.id = 'map-section';
+      observer.observe(mapRef.current);
+    }
 
     return () => observer.disconnect();
   }, []);
@@ -52,197 +53,145 @@ const Location = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const FloatingParticle = ({ delay = 0, size = 2, duration = 3 }) => (
-    <div
-      className="absolute bg-gradient-to-r from-purple-600 to-blue-600 rounded-full opacity-70"
-      style={{
-        width: size,
-        height: size,
-        left: `${Math.random() * 100}%`,
-        top: `${Math.random() * 100}%`,
-        animation: `float ${duration}s ease-in-out infinite ${delay}s`,
-      }}
-    />
-  );
+  useEffect(() => {
+    const checkMap = () => {
+      if (mapRef.current) {
+        const iframe = mapRef.current.querySelector('iframe');
+        if (iframe && !iframe.contentWindow) {
+          setMapError(true);
+        } else {
+          setMapError(false);
+        }
+      }
+    };
+    const timer = setTimeout(checkMap, 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
-  // Helper function to check if element is visible
   const isVisible = (elementId) => visibleElements.has(elementId);
 
   return (
     <div className="relative w-full min-h-screen bg-gradient-to-br from-gray-950 via-purple-950 to-blue-950 overflow-hidden">
       <style jsx>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(180deg); }
-        }
-        @keyframes pulse {
-          0%, 100% { opacity: 0.5; transform: scale(1); }
-          50% { opacity: 0.8; transform: scale(1.05); }
-        }
-        @keyframes slideInLeft {
-          from { opacity: 0; transform: translateX(-100px); }
-          to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes slideInRight {
-          from { opacity: 0; transform: translateX(100px); }
-          to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes slideInUp {
-          from { opacity: 0; transform: translateY(50px); }
-          to { opacity: 1; transform: translateY(0); }
+        @keyframes bounceIn {
+          0% { opacity: 0; transform: scale(0.3) translateY(50px); }
+          50% { opacity: 1; transform: scale(1.1) translateY(-10px); }
+          70% { transform: scale(0.9) translateY(5px); }
+          100% { opacity: 1; transform: scale(1) translateY(0); }
         }
         @keyframes glow {
-          0%, 100% { box-shadow: 0 0 10px rgba(59, 130, 246, 0.5); }
-          50% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.7); }
+          0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+          50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.8), 0 0 60px rgba(147, 51, 234, 0.4); }
+        }
+        .animate-bounceIn {
+          animation: bounceIn 1.2s ease-out forwards;
         }
         .animate-glow {
           animation: glow 2s ease-in-out infinite;
         }
-        .card-hover {
-          transition: all 0.3s ease;
+        .map-container {
+          background: rgba(255, 255, 255, 0.1);
+          border: 1px solid rgba(59, 130, 246, 0.5);
+          border-radius: 1rem;
+          overflow: hidden;
+          position: relative;
+          z-index: 10;
         }
-        .card-hover:hover {
-          transform: translateY(-5px) scale(1.02);
-          box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2);
+        .map-error {
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid rgba(255, 99, 71, 0.5);
+          border-radius: 1rem;
+          padding: 1rem;
+          text-align: center;
+          color: #f9fafb;
         }
-        .animate-on-scroll {
-          opacity: 0;
-          transform: translateY(50px);
-          transition: all 0.8s ease-out;
-        }
-        .animate-on-scroll.visible {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        .animate-slide-left {
-          opacity: 0;
-          transform: translateX(-100px);
-          transition: all 1s ease-out;
-        }
-        .animate-slide-left.visible {
-          opacity: 1;
-          transform: translateX(0);
-        }
-        .animate-slide-right {
-          opacity: 0;
-          transform: translateX(100px);
-          transition: all 1s ease-out;
-        }
-        .animate-slide-right.visible {
-          opacity: 1;
-          transform: translateX(0);
-        }
-        .stagger-1 { transition-delay: 0.1s; }
-        .stagger-2 { transition-delay: 0.2s; }
-        .stagger-3 { transition-delay: 0.3s; }
-        .stagger-4 { transition-delay: 0.4s; }
-        .stagger-5 { transition-delay: 0.5s; }
-        .stagger-6 { transition-delay: 0.6s; }
       `}</style>
-
-      {/* Dynamic Background */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-purple-600/20 to-blue-600/20 rounded-full filter blur-3xl animate-pulse" 
-               style={{ animation: 'pulse 8s ease-in-out infinite' }} />
-          <div className="absolute top-3/4 right-1/4 w-80 h-80 bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-full filter blur-3xl animate-pulse" 
-               style={{ animation: 'pulse 6s ease-in-out infinite 2s' }} />
-          <div className="absolute top-1/2 left-1/2 w-72 h-72 bg-gradient-to-r from-purple-600/20 to-blue-600/20 rounded-full filter blur-3xl animate-pulse" 
-               style={{ animation: 'pulse 10s ease-in-out infinite 4s' }} />
-        </div>
-
-        {[...Array(20)].map((_, i) => (
-          <FloatingParticle 
-            key={i} 
-            delay={Math.random() * 5} 
-            size={Math.random() * 3 + 1}
-            duration={Math.random() * 4 + 3}
-          />
-        ))}
-      </div>
 
       <Navbar />
 
-      {/* Hero Section */}
       <div ref={heroRef} className="relative z-10 flex flex-col items-center justify-center text-center text-white min-h-screen px-4 pt-20">
-        <div 
-          className={`text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-800 to-blue-800 bg-clip-text text-transparent animate-on-scroll ${isVisible('section-0') ? 'visible' : ''}`}
-          style={{ 
-            textShadow: '0 0 20px rgba(59, 130, 246, 0.4)'
-          }}
-        >
-          Visit Us
-        </div>
-        
-        <p 
-          className={`text-lg md:text-xl mb-12 max-w-4xl leading-relaxed text-gray-300 animate-on-scroll stagger-1 ${isVisible('section-0') ? 'visible' : ''}`}
-        >
-          Find Novatec Sol at our headquarters in New York City, where innovation meets opportunity.
+        <div className={`text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent ${isVisible('section-0') ? 'animate-bounceIn' : ''}`}>Visit Us</div>
+        <p className={`text-lg md:text-xl mb-12 max-w-4xl leading-relaxed text-gray-300 ${isVisible('section-0') ? 'animate-bounceIn' : ''}`}>
+          Find Supernova Solutions LLC at our office in Albuquerque, NM, near Jerry Cline Park, where innovation drives your digital success.
         </p>
+        <Link
+          to="/contact"
+          className={`bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-full transition-all duration-500 hover:scale-110 animate-glow ${isVisible('section-0') ? 'animate-bounceIn' : ''}`}
+        >
+          Get in Touch
+        </Link>
       </div>
 
-      {/* Location Section */}
       <div ref={locationRef} className="relative z-10 py-20 px-4">
-        <h2 
-          className={`text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-purple-800 to-blue-800 bg-clip-text text-transparent animate-on-scroll ${isVisible('section-1') ? 'visible' : ''}`}
-        >
-          Our Location
-        </h2>
-        
+        <h2 className={`text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent ${isVisible('section-1') ? 'animate-bounceIn' : ''}`}>Our Location</h2>
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
-          <div className={`animate-slide-left ${isVisible('section-1') ? 'visible' : ''}`}>
-            <div className="bg-gradient-to-br from-gray-900/50 to-blue-900/50 backdrop-blur-md rounded-2xl p-8 border border-blue-600/30 card-hover">
+          <div>
+            <div className="bg-gradient-to-br from-gray-900/60 to-blue-900/60 backdrop-blur-md rounded-3xl p-8 border border-blue-600/40 shadow-lg">
               <h3 className="text-2xl font-bold mb-4 text-gray-300">Headquarters</h3>
               <p className="text-gray-300 mb-4">
-                Novatec Sol<br />
-                123 Innovation Avenue, Suite 500<br />
-                New York, NY 10001<br />
-                United States
+                Supernova Solutions LLC<br />
+                1209 Mountain Rd Pl NE, Albuquerque, NM 87110, USA
               </p>
               <p className="text-gray-300 mb-4">
                 <strong>Phone:</strong> +1 (646) 930-8617<br />
-                <strong>Email:</strong> <a href="mailto:info@novatecsol.com" className="text-blue-400 hover:underline">info@novatecsol.com</a>
+                <strong>Email:</strong> <a href="mailto:info@supernovasolutionsllc.com" className="text-blue-400 hover:underline">info@supernovasolutionsllc.com</a>
               </p>
-              <a
-                href="/contact"
-                className="inline-block bg-gradient-to-r from-purple-700 to-blue-700 hover:from-purple-800 hover:to-blue-800 text-white font-semibold py-2 px-6 rounded-full transition-all duration-300 hover:scale-105 animate-glow"
-              >
+              <p className="text-gray-300 mb-4">
+                <strong>Landmark:</strong> Near Jerry Cline Park (~0.5 miles)
+              </p>
+              <Link to="/contact" className="inline-block mt-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold py-2 px-6 rounded-full transition-all duration-300 hover:scale-105 animate-glow">
                 Contact Us
-              </a>
+              </Link>
             </div>
           </div>
-          <div className={`animate-slide-right ${isVisible('section-1') ? 'visible' : ''}`}>
-            <div className="bg-gradient-to-br from-gray-900/50 to-blue-900/50 backdrop-blur-md rounded-2xl p-8 border border-blue-600/30 card-hover">
-              <div className="relative w-full h-64 bg-gray-900/50 rounded-lg overflow-hidden">
-                <div className="absolute inset-0 flex items-center justify-center text-gray-300">
-                  <div className="text-center">
-                    <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full animate-pulse"></div>
-                    <p>Map Placeholder<br />(Interactive map would be embedded here)</p>
-                  </div>
+
+          <div>
+            <div ref={mapRef} className="map-container">
+              {mapError ? (
+                <div className="map-error h-96 flex flex-col items-center justify-center">
+                  <p className="text-red-200 mb-2">Unable to load map. Please try again later.</p>
+                  <a
+                    href="https://www.google.com/maps/place/1209+Mountain+Rd+Pl+NE,+Albuquerque,+NM+87110,+USA"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-400 hover:underline"
+                  >
+                    View on Google Maps
+                  </a>
                 </div>
-              </div>
+              ) : (
+                <iframe
+                  className="w-full h-96 rounded-lg border-0"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3264.6082772764125!2d-106.558027!3d35.0915191!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87220a95517c54df%3A0x3e76bfbf9c67468!2s1209%20Mountain%20Rd%20Pl%20NE%2C%20Albuquerque%2C%20NM%2087110%2C%20USA!5e0!3m2!1sen!2s!4v1751976817901!5m2!1sen!2s"
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Supernova Solutions LLC Location"
+                  onError={() => setMapError(true)}
+                ></iframe>
+              )}
+              <p className="text-gray-300 mt-4 text-center px-4">
+                Our office is located just 0.5 miles from Jerry Cline Park in Albuquerque’s Uptown area.
+              </p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Call to Action Section */}
       <div ref={ctaRef} className="relative z-10 py-20 px-4">
-        <div 
-          className={`max-w-4xl mx-auto text-center text-white animate-on-scroll ${isVisible('section-2') ? 'visible' : ''}`}
-        >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-800 to-blue-800 bg-clip-text text-transparent">
+        <div className={`max-w-4xl mx-auto text-center text-white ${isVisible('section-2') ? 'animate-bounceIn' : ''}`}>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
             Connect With Us
           </h2>
           <p className="text-xl mb-8 text-gray-300">
-            Drop by our office or reach out online to start your digital transformation journey with Novatec Sol.
+            Drop by our Albuquerque office near Jerry Cline Park or reach out online to start your digital transformation journey with Supernova Solutions LLC.
           </p>
-          <a
-            href="/contact"
-            className="inline-block bg-gradient-to-r from-purple-700 to-blue-700 hover:from-purple-800 hover:to-blue-800 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 animate-glow"
+          <Link
+            to="/contact"
+            className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-full transition-all duration-500 hover:scale-110 animate-glow"
           >
             Get in Touch
-          </a>
+          </Link>
         </div>
       </div>
 

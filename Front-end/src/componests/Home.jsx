@@ -124,82 +124,150 @@ const Home = () => {
           50% { opacity: 0.8; transform: scale(1.05); }
         }
         @keyframes slideInLeft {
-          from { opacity: 0; transform: translateX(-100px); }
-          to { opacity: 1; transform: translateX(0); }
+          from { opacity: 0; transform: translateX(-200px) scale(0.8); }
+          to { opacity: 1; transform: translateX(0) scale(1); }
         }
         @keyframes slideInRight {
-          from { opacity: 0; transform: translateX(100px); }
-          to { opacity: 1; transform: translateX(0); }
+          from { opacity: 0; transform: translateX(200px) scale(0.8); }
+          to { opacity: 1; transform: translateX(0) scale(1); }
         }
         @keyframes slideInUp {
-          from { opacity: 0; transform: translateY(50px); }
-          to { opacity: 1; transform: translateY(0); }
+          from { opacity: 0; transform: translateY(100px) scale(0.8); }
+          to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes slideInDown {
+          from { opacity: 0; transform: translateY(-100px) scale(0.8); }
+          to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes bounceIn {
+          0% { opacity: 0; transform: scale(0.3) translateY(50px); }
+          50% { opacity: 1; transform: scale(1.1) translateY(-10px); }
+          70% { transform: scale(0.9) translateY(5px); }
+          100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        @keyframes fadeInScale {
+          0% { opacity: 0; transform: scale(0.5) rotate(-10deg); }
+          50% { opacity: 0.7; transform: scale(1.1) rotate(5deg); }
+          100% { opacity: 1; transform: scale(1) rotate(0deg); }
         }
         @keyframes glow {
-          0%, 100% { box-shadow: 0 0 10px rgba(59, 130, 246, 0.5); }
-          50% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.7); }
+          0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+          50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.8), 0 0 60px rgba(147, 51, 234, 0.4); }
+        }
+        @keyframes heroTitle {
+          0% { opacity: 0; transform: translateY(-50px) scale(0.9); }
+          50% { opacity: 0.8; transform: translateY(-10px) scale(1.05); }
+          100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes typewriter {
+          0% { opacity: 0; transform: translateX(-20px); }
+          100% { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes cardHover {
+          0% { transform: translateY(0) scale(1); }
+          100% { transform: translateY(-15px) scale(1.05); }
         }
         .animate-glow {
           animation: glow 2s ease-in-out infinite;
         }
         .card-hover {
-          transition: all 0.3s ease;
+          transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .card-hover:hover {
-          transform: translateY(-5px) scale(1.02);
-          box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2);
+          transform: translateY(-15px) scale(1.05);
+          box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3), 0 0 0 1px rgba(59, 130, 246, 0.2);
         }
         .animate-on-scroll {
           opacity: 0;
-          transform: translateY(50px);
-          transition: all 0.8s ease-out;
+          transform: translateY(100px) scale(0.8);
+          transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .animate-on-scroll.visible {
           opacity: 1;
-          transform: translateY(0);
+          transform: translateY(0) scale(1);
         }
         .animate-slide-left {
           opacity: 0;
-          transform: translateX(-100px);
-          transition: all 1s ease-out;
+          transform: translateX(-200px) scale(0.8);
+          transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .animate-slide-left.visible {
           opacity: 1;
-          transform: translateX(0);
+          transform: translateX(0) scale(1);
         }
         .animate-slide-right {
           opacity: 0;
-          transform: translateX(100px);
-          transition: all 1s ease-out;
+          transform: translateX(200px) scale(0.8);
+          transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .animate-slide-right.visible {
           opacity: 1;
-          transform: translateX(0);
+          transform: translateX(0) scale(1);
         }
-        .stagger-1 { transition-delay: 0.1s; }
-        .stagger-2 { transition-delay: 0.2s; }
-        .stagger-3 { transition-delay: 0.3s; }
-        .stagger-4 { transition-delay: 0.4s; }
-        .stagger-5 { transition-delay: 0.5s; }
-        .stagger-6 { transition-delay: 0.6s; }
+        .animate-bounce-in {
+          opacity: 0;
+          transform: scale(0.3) translateY(50px);
+          transition: all 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        .animate-bounce-in.visible {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+        .animate-fade-scale {
+          opacity: 0;
+          transform: scale(0.5) rotate(-10deg);
+          transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .animate-fade-scale.visible {
+          opacity: 1;
+          transform: scale(1) rotate(0deg);
+        }
+        .animate-hero-title {
+          opacity: 0;
+          transform: translateY(-50px) scale(0.9);
+          animation: heroTitle 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        .animate-typewriter {
+          animation: typewriter 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        .stagger-1 { transition-delay: 0.2s; }
+        .stagger-2 { transition-delay: 0.4s; }
+        .stagger-3 { transition-delay: 0.6s; }
+        .stagger-4 { transition-delay: 0.8s; }
+        .stagger-5 { transition-delay: 1s; }
+        .stagger-6 { transition-delay: 1.2s; }
+        
+        /* Enhanced hover effects */
+        .service-card:hover .service-icon {
+          transform: scale(1.2) rotate(10deg);
+          transition: all 0.3s ease;
+        }
+        .pricing-card:hover {
+          transform: translateY(-10px) scale(1.02);
+          box-shadow: 0 25px 50px rgba(59, 130, 246, 0.4);
+        }
+        .team-card:hover .team-avatar {
+          transform: scale(1.15) rotate(5deg);
+          transition: all 0.3s ease;
+        }
       `}</style>
 
-      {/* Dynamic Background */}
+      {/* Enhanced Dynamic Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-purple-600/20 to-blue-600/20 rounded-full filter blur-3xl animate-pulse" 
+          <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-gradient-to-r from-purple-600/30 to-blue-600/30 rounded-full filter blur-3xl animate-pulse" 
                style={{ animation: 'pulse 8s ease-in-out infinite' }} />
-          <div className="absolute top-3/4 right-1/4 w-80 h-80 bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-full filter blur-3xl animate-pulse" 
+          <div className="absolute top-3/4 right-1/4 w-[400px] h-[400px] bg-gradient-to-r from-blue-600/30 to-purple-600/30 rounded-full filter blur-3xl animate-pulse" 
                style={{ animation: 'pulse 6s ease-in-out infinite 2s' }} />
-          <div className="absolute top-1/2 left-1/2 w-72 h-72 bg-gradient-to-r from-purple-600/20 to-blue-600/20 rounded-full filter blur-3xl animate-pulse" 
+          <div className="absolute top-1/2 left-1/2 w-[600px] h-[600px] bg-gradient-to-r from-purple-600/20 to-blue-600/20 rounded-full filter blur-3xl animate-pulse" 
                style={{ animation: 'pulse 10s ease-in-out infinite 4s' }} />
         </div>
 
-        {[...Array(20)].map((_, i) => (
+        {[...Array(30)].map((_, i) => (
           <FloatingParticle 
             key={i} 
             delay={Math.random() * 5} 
-            size={Math.random() * 3 + 1}
+            size={Math.random() * 6 + 2}
             duration={Math.random() * 4 + 3}
           />
         ))}
@@ -207,35 +275,36 @@ const Home = () => {
 
       <Navbar />
 
-      {/* Hero Section */}
+      {/* Enhanced Hero Section */}
       <div ref={heroRef} className="relative z-10 flex flex-col items-center justify-center text-center text-white min-h-screen px-4 pt-20">
         <div 
-          className={`text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-purple-800 to-blue-800 bg-clip-text text-transparent animate-on-scroll ${isVisible('section-0') ? 'visible' : ''}`}
+          className={`text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent animate-hero-title ${isVisible('section-0') ? 'visible' : ''}`}
           style={{ 
-            textShadow: '0 0 20px rgba(59, 130, 246, 0.4)'
+            textShadow: '0 0 30px rgba(59, 130, 246, 0.6)',
+            animationDelay: '0.2s'
           }}
         >
           Novatec Sol
         </div>
         
         <div 
-          className={`text-2xl md:text-4xl mb-4 text-gray-200 animate-on-scroll stagger-1 ${isVisible('section-0') ? 'visible' : ''}`}
+          className={`text-2xl md:text-4xl mb-4 text-gray-200 animate-bounce-in stagger-1 ${isVisible('section-0') ? 'visible' : ''}`}
         >
           We provide{' '}
-          <span className="text-gradient bg-gradient-to-r from-purple-800 to-blue-800 bg-clip-text text-transparent font-bold">
+          <span className="text-gradient bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent font-bold animate-typewriter">
             {typewriterText}
             <span className="animate-pulse">|</span>
           </span>
         </div>
 
         <div 
-          className={`text-2xl md:text-4xl font-semibold mb-8 text-gray-300 animate-on-scroll stagger-2 ${isVisible('section-0') ? 'visible' : ''}`}
+          className={`text-2xl md:text-4xl font-semibold mb-8 text-gray-300 animate-fade-scale stagger-2 ${isVisible('section-0') ? 'visible' : ''}`}
         >
           Innovative Digital AI Solutions Hub
         </div>
         
         <p 
-          className={`text-lg md:text-xl mb-12 max-w-4xl leading-relaxed text-gray-300 animate-on-scroll stagger-3 ${isVisible('section-0') ? 'visible' : ''}`}
+          className={`text-lg md:text-xl mb-12 max-w-4xl leading-relaxed text-gray-300 animate-slide-left stagger-3 ${isVisible('section-0') ? 'visible' : ''}`}
         >
           At Novatec Sol, we're dedicated to elevating your online presence with cutting-edge AI-powered solutions. 
           Transform your digital landscape with our innovative strategies that drive exponential growth and unlock 
@@ -243,18 +312,22 @@ const Home = () => {
         </p>
         
         <button 
-          className={`bg-gradient-to-r from-purple-700 to-blue-700 hover:from-purple-800 hover:to-blue-800 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 hover:scale-105 animate-glow animate-on-scroll stagger-4 ${isVisible('section-0') ? 'visible' : ''}`}
+          className={`bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-6 px-12 rounded-full transition-all duration-500 hover:scale-110 animate-glow animate-bounce-in stagger-4 ${isVisible('section-0') ? 'visible' : ''}`}
+          style={{ 
+            boxShadow: '0 10px 30px rgba(59, 130, 246, 0.3)',
+            transform: 'translateY(0)',
+          }}
         >
           Start Your Journey
         </button>
       </div>
 
-      {/* Digital Excellence Section */}
+      {/* Enhanced Digital Excellence Section */}
       <div ref={digitalExcellenceRef} className="relative z-10 py-20 px-4">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="text-white">
             <h3 
-              className={`text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-purple-800 to-blue-800 bg-clip-text text-transparent animate-slide-left ${isVisible('section-1') ? 'visible' : ''}`}
+              className={`text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent animate-slide-left ${isVisible('section-1') ? 'visible' : ''}`}
             >
               Digital Excellence Creators
             </h3>
@@ -268,20 +341,20 @@ const Home = () => {
               <div 
                 className={`flex items-center space-x-3 animate-slide-left stagger-2 ${isVisible('section-1') ? 'visible' : ''}`}
               >
-                <div className="w-3 h-3 bg-purple-600 rounded-full animate-pulse"></div>
-                <span className="text-gray-300">AI-Powered Marketing Solutions</span>
+                <div className="w-4 h-4 bg-purple-600 rounded-full animate-pulse"></div>
+                <span className="text-gray-300 text-lg">AI-Powered Marketing Solutions</span>
               </div>
               <div 
                 className={`flex items-center space-x-3 animate-slide-left stagger-3 ${isVisible('section-1') ? 'visible' : ''}`}
               >
-                <div className="w-3 h-3 bg-blue-600 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-                <span className="text-gray-300">Data-Driven Growth Strategies</span>
+                <div className="w-4 h-4 bg-blue-600 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                <span className="text-gray-300 text-lg">Data-Driven Growth Strategies</span>
               </div>
               <div 
                 className={`flex items-center space-x-3 animate-slide-left stagger-4 ${isVisible('section-1') ? 'visible' : ''}`}
               >
-                <div className="w-3 h-3 bg-purple-700 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
-                <span className="text-gray-300">Premium Digital Transformation</span>
+                <div className="w-4 h-4 bg-purple-700 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+                <span className="text-gray-300 text-lg">Premium Digital Transformation</span>
               </div>
             </div>
           </div>
@@ -289,11 +362,11 @@ const Home = () => {
           <div 
             className={`relative animate-slide-right ${isVisible('section-1') ? 'visible' : ''}`}
           >
-            <div className="relative w-80 h-80 mx-auto">
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-700/20 to-blue-700/20 rounded-2xl backdrop-blur-md border border-blue-600/30 flex items-center justify-center">
+            <div className="relative w-96 h-96 mx-auto">
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-700/30 to-blue-700/30 rounded-3xl backdrop-blur-md border border-blue-600/40 flex items-center justify-center transform hover:scale-105 transition-all duration-500">
                 <div className="text-center">
-                  <div className="w-32 h-32 mx-auto mb-4 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full animate-spin opacity-20"></div>
-                  <p className="text-gray-300 font-semibold">AI Innovation Center</p>
+                  <div className="w-40 h-40 mx-auto mb-6 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full animate-spin opacity-30" style={{ animationDuration: '8s' }}></div>
+                  <p className="text-gray-300 font-semibold text-xl">AI Innovation Center</p>
                 </div>
               </div>
             </div>
@@ -301,10 +374,10 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Services Section */}
+      {/* Enhanced Services Section */}
       <div ref={servicesRef} className="relative z-10 py-20 px-4">
         <h3 
-          className={`text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-purple-800 to-blue-800 bg-clip-text text-transparent animate-on-scroll ${isVisible('section-2') ? 'visible' : ''}`}
+          className={`text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent animate-bounce-in ${isVisible('section-2') ? 'visible' : ''}`}
         >
           Explore Our Premium Services
         </h3>
@@ -318,12 +391,15 @@ const Home = () => {
             <div
               key={index}
               id={`service-${index}`}
-              className={`bg-gradient-to-br from-gray-900/50 to-blue-900/50 backdrop-blur-md rounded-2xl p-8 text-white text-center border border-blue-600/30 card-hover animate-on-scroll stagger-${index + 1} ${isVisible('section-2') ? 'visible' : ''}`}
+              className={`service-card bg-gradient-to-br from-gray-900/60 to-blue-900/60 backdrop-blur-md rounded-3xl p-8 text-white text-center border border-blue-600/40 card-hover animate-fade-scale stagger-${index + 1} ${isVisible('section-2') ? 'visible' : ''}`}
+              style={{ 
+                boxShadow: '0 10px 30px rgba(59, 130, 246, 0.2)',
+              }}
             >
-              <div className="text-4xl mb-4">{service.icon}</div>
+              <div className="service-icon text-6xl mb-6 transform transition-all duration-300">{service.icon}</div>
               <h4 className="text-2xl font-bold mb-4 text-gray-300">{service.title}</h4>
-              <p className="text-gray-300 leading-relaxed">{service.desc}</p>
-              <button className="mt-6 bg-gradient-to-r from-purple-700 to-blue-700 hover:from-purple-800 hover:to-blue-800 text-white font-semibold py-2 px-6 rounded-full transition-all duration-300 hover:scale-105">
+              <p className="text-gray-300 leading-relaxed mb-6">{service.desc}</p>
+              <button className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold py-3 px-8 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg">
                 Learn More
               </button>
             </div>
@@ -331,10 +407,10 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Pricing Section */}
+      {/* Enhanced Pricing Section */}
       <div ref={pricingRef} className="relative z-10 py-20 px-4">
         <h3 
-          className={`text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-purple-800 to-blue-800 bg-clip-text text-transparent animate-on-scroll ${isVisible('section-3') ? 'visible' : ''}`}
+          className={`text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent animate-bounce-in ${isVisible('section-3') ? 'visible' : ''}`}
         >
           Investment Plans That Scale
         </h3>
@@ -348,24 +424,24 @@ const Home = () => {
             <div
               key={index}
               id={`plan-${index}`}
-              className={`relative bg-gradient-to-br from-gray-900/50 to-blue-900/50 backdrop-blur-md rounded-2xl p-8 text-white border ${plan.popular ? 'border-blue-600 scale-105' : 'border-blue-600/30'} card-hover animate-on-scroll stagger-${index + 1} ${isVisible('section-3') ? 'visible' : ''}`}
+              className={`pricing-card relative bg-gradient-to-br from-gray-900/60 to-blue-900/60 backdrop-blur-md rounded-3xl p-8 text-white border transition-all duration-500 ${plan.popular ? 'border-blue-500 scale-105 shadow-2xl' : 'border-blue-600/40'} card-hover animate-fade-scale stagger-${index + 1} ${isVisible('section-3') ? 'visible' : ''}`}
             >
               {plan.popular && (
-                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-purple-600 to-blue-600 text-white text-sm py-1 px-4 rounded-full font-semibold">
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-purple-600 to-blue-600 text-white text-sm py-2 px-6 rounded-full font-semibold animate-pulse">
                   MOST POPULAR
                 </div>
               )}
               <h4 className="text-2xl font-bold mb-4 text-center text-gray-300">{plan.name}</h4>
-              <p className="text-5xl font-bold text-center mb-6 bg-gradient-to-r from-purple-800 to-blue-800 bg-clip-text text-transparent">
-                {plan.name}<span className="text-lg text-gray-400">/month</span>
+              <p className="text-6xl font-bold text-center mb-6 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                {plan.price}<span className="text-lg text-gray-400">/month</span>
               </p>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-center"><span className="text-green-400 mr-3">✓</span>Premium GBP/Website Optimization</li>
-                <li className="flex items-center"><span className="text-green-400 mr-3">✓</span>Advanced Citations & Listings</li>
-                <li className="flex items-center"><span className="text-green-400 mr-3">✓</span>Professional Design Assets</li>
-                <li className="flex items-center"><span className="text-green-400 mr-3">✓</span>AI-Powered Analytics</li>
+              <ul className="space-y-4 mb-8">
+                <li className="flex items-center text-lg"><span className="text-green-400 mr-3 text-xl">✓</span>Premium GBP/Website Optimization</li>
+                <li className="flex items-center text-lg"><span className="text-green-400 mr-3 text-xl">✓</span>Advanced Citations & Listings</li>
+                <li className="flex items-center text-lg"><span className="text-green-400 mr-3 text-xl">✓</span>Professional Design Assets</li>
+                <li className="flex items-center text-lg"><span className="text-green-400 mr-3 text-xl">✓</span>AI-Powered Analytics</li>
               </ul>
-              <button className="w-full bg-gradient-to-r from-purple-700 to-blue-700 hover:from-purple-800 hover:to-blue-800 text-white font-bold py-3 px-6 rounded-full transition-all duration-300 hover:scale-105">
+              <button className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-4 px-6 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg">
                 Get Started Now
               </button>
             </div>
@@ -373,10 +449,10 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Team Section */}
-      <div ref={teamRef} className="relative z-10 py-20 px-4 bg-gradient-to-r from-purple-900/20 to-blue-900/20">
+      {/* Enhanced Team Section */}
+      <div ref={teamRef} className="relative z-10 py-20 px-4 bg-gradient-to-r from-purple-900/30 to-blue-900/30">
         <h3 
-          className={`text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-purple-800 to-blue-800 bg-clip-text text-transparent animate-on-scroll ${isVisible('section-4') ? 'visible' : ''}`}
+          className={`text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent animate-bounce-in ${isVisible('section-4') ? 'visible' : ''}`}
         >
           Meet Our Visionary Team
         </h3>
@@ -391,9 +467,9 @@ const Home = () => {
             <div
               key={index}
               id={`team-${index}`}
-              className={`bg-gradient-to-br from-gray-900/50 to-blue-900/50 backdrop-blur-md rounded-2xl p-6 text-white text-center border border-blue-600/30 card-hover animate-on-scroll stagger-${index + 1} ${isVisible('section-4') ? 'visible' : ''}`}
+              className={`team-card bg-gradient-to-br from-gray-900/60 to-blue-900/60 backdrop-blur-md rounded-3xl p-8 text-white text-center border border-blue-600/40 card-hover animate-fade-scale stagger-${index + 1} ${isVisible('section-4') ? 'visible' : ''}`}
             >
-              <div className="text-6xl mb-4">{member.avatar}</div>
+              <div className="team-avatar text-8xl mb-6 transform transition-all duration-300">{member.avatar}</div>
               <h4 className="text-xl font-bold mb-2 text-gray-300">{member.name}</h4>
               <p className="text-gray-300 text-sm">{member.role}</p>
             </div>
@@ -401,10 +477,10 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Customer Reviews */}
+      {/* Enhanced Customer Reviews */}
       <div ref={reviewsRef} className="relative z-10 py-20 px-4">
         <h3 
-          className={`text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-purple-800 to-blue-800 bg-clip-text text-transparent animate-on-scroll ${isVisible('section-5') ? 'visible' : ''}`}
+          className={`text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent animate-bounce-in ${isVisible('section-5') ? 'visible' : ''}`}
         >
           What Our Clients Say
         </h3>
@@ -417,15 +493,15 @@ const Home = () => {
             <div
               key={index}
               id={`review-${index}`}
-              className={`bg-gradient-to-br from-gray-900/50 to-blue-900/50 backdrop-blur-md rounded-2xl p-8 text-white border border-blue-600/30 card-hover ${index % 2 === 0 ? 'animate-slide-left' : 'animate-slide-right'} stagger-${index + 1} ${isVisible('section-5') ? 'visible' : ''}`}
+              className={`bg-gradient-to-br from-gray-900/60 to-blue-900/60 backdrop-blur-md rounded-3xl p-8 text-white border border-blue-600/40 card-hover transition-all duration-500 ${index % 2 === 0 ? 'animate-slide-left' : 'animate-slide-right'} stagger-${index + 1} ${isVisible('section-5') ? 'visible' : ''}`}
             >
-              <div className="flex mb-4">
+              <div className="flex mb-6">
                 {[...Array(testimonial.rating)].map((_, i) => (
-                  <span key={i} className="text-yellow-400 text-xl">⭐</span>
+                  <span key={i} className="text-yellow-400 text-2xl animate-pulse" style={{ animationDelay: `${i * 0.2}s` }}>⭐</span>
                 ))}
               </div>
-              <p className="text-lg italic mb-4 text-gray-300">"{testimonial.review}"</p>
-              <p className="font-semibold text-gray-300">- {testimonial.author}</p>
+              <p className="text-xl italic mb-6 text-gray-300">"{testimonial.review}"</p>
+              <p className="font-semibold text-gray-300 text-lg">- {testimonial.author}</p>
             </div>
           ))}
         </div>
