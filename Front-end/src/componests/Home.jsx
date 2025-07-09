@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
 import Navbar from './Navbar.jsx';
 import Footer from './Footer.jsx';
 
@@ -15,6 +17,8 @@ const Home = () => {
   const reviewsRef = useRef(null);
   const heroRef = useRef(null);
   const digitalExcellenceRef = useRef(null);
+  const navigate = useNavigate();
+
 
   const services = ["Google My Business", "Graphic Designing", "Search Engine Optimization", "AI-Driven Marketing", "Digital Transformation"];
 
@@ -284,7 +288,7 @@ const Home = () => {
             animationDelay: '0.2s'
           }}
         >
-          Novatec Sol
+          Supernova Sol
         </div>
         
         <div 
@@ -300,13 +304,13 @@ const Home = () => {
         <div 
           className={`text-2xl md:text-4xl font-semibold mb-8 text-gray-300 animate-fade-scale stagger-2 ${isVisible('section-0') ? 'visible' : ''}`}
         >
-          Innovative Digital AI Solutions Hub
+          Innovative Digital Solutions Hub
         </div>
         
         <p 
           className={`text-lg md:text-xl mb-12 max-w-4xl leading-relaxed text-gray-300 animate-slide-left stagger-3 ${isVisible('section-0') ? 'visible' : ''}`}
         >
-          At Novatec Sol, we're dedicated to elevating your online presence with cutting-edge AI-powered solutions. 
+          At Novatec Sol, we're dedicated to elevating your online presence with cutting-edge solutions. 
           Transform your digital landscape with our innovative strategies that drive exponential growth and unlock 
           unprecedented potential for your business in the digital age.
         </p>
@@ -342,7 +346,7 @@ const Home = () => {
                 className={`flex items-center space-x-3 animate-slide-left stagger-2 ${isVisible('section-1') ? 'visible' : ''}`}
               >
                 <div className="w-4 h-4 bg-purple-600 rounded-full animate-pulse"></div>
-                <span className="text-gray-300 text-lg">AI-Powered Marketing Solutions</span>
+                <span className="text-gray-300 text-lg"> Marketing Solutions</span>
               </div>
               <div 
                 className={`flex items-center space-x-3 animate-slide-left stagger-3 ${isVisible('section-1') ? 'visible' : ''}`}
@@ -366,7 +370,7 @@ const Home = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-purple-700/30 to-blue-700/30 rounded-3xl backdrop-blur-md border border-blue-600/40 flex items-center justify-center transform hover:scale-105 transition-all duration-500">
                 <div className="text-center">
                   <div className="w-40 h-40 mx-auto mb-6 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full animate-spin opacity-30" style={{ animationDuration: '8s' }}></div>
-                  <p className="text-gray-300 font-semibold text-xl">AI Innovation Center</p>
+                  <p className="text-gray-300 font-semibold text-xl">Supernova</p>
                 </div>
               </div>
             </div>
@@ -382,29 +386,33 @@ const Home = () => {
           Explore Our Premium Services
         </h3>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {[
-            { title: "SEO Optimization", desc: "Dominate search results with our advanced SEO strategies and AI-powered optimization techniques.", icon: "🚀" },
-            { title: "Graphic Designing", desc: "Create stunning, conversion-focused visuals that captivate audiences and drive engagement.", icon: "🎨" },
-            { title: "Google My Business", desc: "Maximize local visibility and attract high-quality customers with optimized GMB profiles.", icon: "📍" },
-          ].map((service, index) => (
-            <div
-              key={index}
-              id={`service-${index}`}
-              className={`service-card bg-gradient-to-br from-gray-900/60 to-blue-900/60 backdrop-blur-md rounded-3xl p-8 text-white text-center border border-blue-600/40 card-hover animate-fade-scale stagger-${index + 1} ${isVisible('section-2') ? 'visible' : ''}`}
-              style={{ 
-                boxShadow: '0 10px 30px rgba(59, 130, 246, 0.2)',
-              }}
-            >
-              <div className="service-icon text-6xl mb-6 transform transition-all duration-300">{service.icon}</div>
-              <h4 className="text-2xl font-bold mb-4 text-gray-300">{service.title}</h4>
-              <p className="text-gray-300 leading-relaxed mb-6">{service.desc}</p>
-              <button className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold py-3 px-8 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg">
-                Learn More
-              </button>
-            </div>
-          ))}
-        </div>
+       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+  {[
+    { title: "SEO Optimization", desc: "Dominate search results with our advanced SEO strategies and optimization techniques.", icon: "🚀", path: "/services/seo-optimization" },
+    { title: "Website Design & Development", desc: "Build modern, responsive, and SEO-friendly websites tailored to your business goals.", icon: "💻", path: "/services/website-development" },
+    { title: "Google My Business", desc: "Maximize local visibility and attract high-quality customers with optimized GMB profiles.", icon: "📍", path: "/services/google-my-business" },
+  ].map((service, index) => (
+    <div
+      key={index}
+      id={`service-${index}`}
+      className={`service-card bg-gradient-to-br from-gray-900/60 to-blue-900/60 backdrop-blur-md rounded-3xl p-8 text-white text-center border border-blue-600/40 card-hover animate-fade-scale stagger-${index + 1} ${isVisible('section-2') ? 'visible' : ''}`}
+      style={{ 
+        boxShadow: '0 10px 30px rgba(59, 130, 246, 0.2)',
+      }}
+    >
+      <div className="service-icon text-6xl mb-6 transform transition-all duration-300">{service.icon}</div>
+      <h4 className="text-2xl font-bold mb-4 text-gray-300">{service.title}</h4>
+      <p className="text-gray-300 leading-relaxed mb-6">{service.desc}</p>
+      <button
+        onClick={() => navigate(service.path)}
+        className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold py-3 px-8 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg"
+      >
+        Learn More
+      </button>
+    </div>
+  ))}
+</div>
+
       </div>
 
       {/* Enhanced Pricing Section */}
@@ -439,7 +447,7 @@ const Home = () => {
                 <li className="flex items-center text-lg"><span className="text-green-400 mr-3 text-xl">✓</span>Premium GBP/Website Optimization</li>
                 <li className="flex items-center text-lg"><span className="text-green-400 mr-3 text-xl">✓</span>Advanced Citations & Listings</li>
                 <li className="flex items-center text-lg"><span className="text-green-400 mr-3 text-xl">✓</span>Professional Design Assets</li>
-                <li className="flex items-center text-lg"><span className="text-green-400 mr-3 text-xl">✓</span>AI-Powered Analytics</li>
+                <li className="flex items-center text-lg"><span className="text-green-400 mr-3 text-xl">✓</span>Analytics</li>
               </ul>
               <button className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-4 px-6 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg">
                 Get Started Now
@@ -487,7 +495,7 @@ const Home = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {[
-            { review: "Absolutely revolutionary! Novatec Sol transformed our digital presence beyond our wildest expectations. The AI-driven strategies delivered phenomenal results!", author: "Sarah Johnson", rating: 5 },
+            { review: "Absolutely revolutionary! Novatec Sol transformed our digital presence beyond our wildest expectations. The strategies delivered phenomenal results!", author: "Sarah Johnson", rating: 5 },
             { review: "Outstanding service and incredible results. The team's expertise in digital marketing is unmatched. Highly recommend for serious business growth!", author: "Michael Chen", rating: 5 },
           ].map((testimonial, index) => (
             <div

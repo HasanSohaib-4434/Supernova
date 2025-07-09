@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from '../Navbar.jsx';
 import Footer from '../Footer.jsx';
 
-const GraphicDesign = () => {
+const AnalyticsReporting = () => {
   const navigate = useNavigate();
   const [scrollY, setScrollY] = useState(0);
   const [visibleElements, setVisibleElements] = useState(new Set());
@@ -192,17 +192,23 @@ const GraphicDesign = () => {
       {/* Dynamic Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-gradient-to-r from-purple-600/30 to-blue-600/30 rounded-full filter blur-3xl animate-pulse" 
-               style={{ animation: 'pulse 8s ease-in-out infinite' }} />
-          <div className="absolute top-3/4 right-1/4 w-[400px] h-[400px] bg-gradient-to-r from-blue-600/30 to-purple-600/30 rounded-full filter blur-3xl animate-pulse" 
-               style={{ animation: 'pulse 6s ease-in-out infinite 2s' }} />
-          <div className="absolute top-1/2 left-1/2 w-[600px] h-[600px] bg-gradient-to-r from-purple-600/20 to-blue-600/20 rounded-full filter blur-3xl animate-pulse" 
-               style={{ animation: 'pulse 10s ease-in-out infinite 4s' }} />
+          <div
+            className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-gradient-to-r from-purple-600/30 to-blue-600/30 rounded-full filter blur-3xl animate-pulse"
+            style={{ animation: 'pulse 8s ease-in-out infinite' }}
+          />
+          <div
+            className="absolute top-3/4 right-1/4 w-[400px] h-[400px] bg-gradient-to-r from-blue-600/30 to-purple-600/30 rounded-full filter blur-3xl animate-pulse"
+            style={{ animation: 'pulse 6s ease-in-out infinite 2s' }}
+          />
+          <div
+            className="absolute top-1/2 left-1/2 w-[600px] h-[600px] bg-gradient-to-r from-purple-600/20 to-blue-600/20 rounded-full filter blur-3xl animate-pulse"
+            style={{ animation: 'pulse 10s ease-in-out infinite 4s' }}
+          />
         </div>
         {[...Array(30)].map((_, i) => (
-          <FloatingParticle 
-            key={i} 
-            delay={Math.random() * 5} 
+          <FloatingParticle
+            key={i}
+            delay={Math.random() * 5}
             size={Math.random() * 6 + 2}
             duration={Math.random() * 4 + 3}
           />
@@ -214,59 +220,83 @@ const GraphicDesign = () => {
       <Navbar />
 
       {/* Hero Section */}
-      <div ref={heroRef} className="relative z-10 flex flex-col items-center justify-center text-center text-white min-h-screen px-4 sm:px-6 lg:px-8 pt-20">
-        <h1 
-          className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent animate-hero-title ${isVisible('section-0') ? 'visible' : ''}`}
-          style={{ 
+      <div
+        ref={heroRef}
+        className="relative z-10 flex flex-col items-center justify-center text-center text-white min-h-screen px-4 sm:px-6 lg:px-8 pt-20"
+      >
+        <h1
+          className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent animate-hero-title ${
+            isVisible('section-0') ? 'visible' : ''
+          }`}
+          style={{
             textShadow: '0 0 30px rgba(59, 130, 246, 0.6)',
             animationDelay: '0.2s'
           }}
         >
-          Graphic Design
+          Analytics & Reporting
         </h1>
-        <p 
-          className={`text-base sm:text-lg md:text-xl lg:text-2xl mb-12 max-w-4xl leading-relaxed text-gray-300 animate-bounce-in stagger-1 ${isVisible('section-0') ? 'visible' : ''}`}
+        <p
+          className={`text-base sm:text-lg md:text-xl lg:text-2xl mb-12 max-w-4xl leading-relaxed text-gray-300 animate-bounce-in stagger-1 ${
+            isVisible('section-0') ? 'visible' : ''
+          }`}
         >
-          Create stunning visual identities that captivate audiences and drive engagement across all platforms.
+          Track performance and gain insights with advanced analytics tools.
         </p>
       </div>
 
       {/* What We Offer Section */}
-      <div ref={offerRef} className="relative z-10 py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <h2 
-          className={`text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-12 sm:mb-16 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent animate-bounce-in ${isVisible('section-1') ? 'visible' : ''}`}
+      <div
+        ref={offerRef}
+        className="relative z-10 py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto"
+      >
+        <h2
+          className={`text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-12 sm:mb-16 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent animate-bounce-in ${
+            isVisible('section-1') ? 'visible' : ''
+          }`}
         >
           What We Offer
         </h2>
-        <div 
-          className={`bg-gradient-to-br from-gray-900/60 to-blue-900/60 backdrop-blur-md rounded-3xl p-6 sm:p-8 text-white border border-blue-600/40 card-hover animate-on-scroll stagger-1 ${isVisible('section-1') ? 'visible' : ''}`}
+        <div
+          className={`bg-gradient-to-br from-gray-900/60 to-blue-900/60 backdrop-blur-md rounded-3xl p-6 sm:p-8 text-white border border-blue-600/40 card-hover animate-on-scroll stagger-1 ${
+            isVisible('section-1') ? 'visible' : ''
+          }`}
           style={{ boxShadow: '0 10px 30px rgba(59, 130, 246, 0.2)' }}
         >
-          <p 
-            className={`text-sm sm:text-base text-gray-300 mb-8 leading-relaxed animate-slide-left stagger-2 ${isVisible('section-1') ? 'visible' : ''}`}
+          <p
+            className={`text-sm sm:text-base text-gray-300 mb-8 leading-relaxed animate-slide-left stagger-2 ${
+              isVisible('section-1') ? 'visible' : ''
+            }`}
           >
-            Our Graphic Design service delivers visually striking designs to elevate your brand and engage your audience.
+            Our Analytics & Reporting service provides comprehensive performance tracking and customized insights to optimize your digital marketing strategies.
           </p>
           <div className="space-y-4 mb-8">
             {[
-              "Logo Design: Craft unique brand logos.",
-              "Brand Identity: Develop cohesive visual identities.",
-              "Social Media Graphics: Create engaging visuals.",
-              "Print Materials: Design brochures and flyers.",
-              "Web Design: Build visually appealing websites."
+           "Google Analytics: Track website traffic, user behavior, and key metrics.",
+"Search Console: Monitor search visibility and identify optimization opportunities.",
+"Custom Reports: Generate tailored reports for strategic decision-making.",
+"Performance Tracking: Regularly assess campaign performance across channels.",
+"Data Insights: Use analytics to drive continuous improvement and growth."
+
             ].map((item, index) => (
-              <div 
-                key={index} 
-                className={`flex items-center space-x-3 animate-slide-right stagger-${index + 3} ${isVisible('section-1') ? 'visible' : ''}`}
+              <div
+                key={index}
+                className={`flex items-center space-x-3 animate-slide-right stagger-${index + 3} ${
+                  isVisible('section-1') ? 'visible' : ''
+                }`}
               >
-                <div className="w-2 h-2 bg-blue-600 rounded-full animate-pulse" style={{ animationDelay: `${index * 0.2}s` }}></div>
+                <div
+                  className="w-2 h-2 bg-blue-600 rounded-full animate-pulse"
+                  style={{ animationDelay: `${index * 0.2}s` }}
+                ></div>
                 <span className="text-gray-300 text-sm sm:text-base">{item}</span>
               </div>
             ))}
           </div>
-          <button 
+          <button
             onClick={navigateToContact}
-            className={`w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-full transition-all duration-500 hover:scale-110 animate-glow animate-bounce-in stagger-6 ${isVisible('section-1') ? 'visible' : ''}`}
+            className={`w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-full transition-all duration-500 hover:scale-110 animate-glow animate-bounce-in stagger-6 ${
+              isVisible('section-1') ? 'visible' : ''
+            }`}
             style={{ boxShadow: '0 10px 30px rgba(59, 130, 246, 0.3)' }}
           >
             Get Started
@@ -279,4 +309,4 @@ const GraphicDesign = () => {
   );
 };
 
-export default GraphicDesign;
+export default AnalyticsReporting;

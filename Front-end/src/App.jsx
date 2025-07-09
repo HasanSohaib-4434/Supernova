@@ -14,7 +14,17 @@ import SocialMediaMarketing from '../src/componests/services/SocialMediaMarketin
 import WebsiteDevelopment from '../src/componests/services/WebsiteDevelopment';
 import AIMarketingAutomation from '../src/componests/services/AIMarketingAutomation';
 
+import AnalyticsReporting from '../src/componests/services/AnalyticsReporting';
+import ContentMarketing from '../src/componests/services/ContentMarketing';
+import EmailMarketing from '../src/componests/services/EmailMarketing';
+import PayPerClickAdvertising from '../src/componests/services/PayPerClickAdvertising';
+import BrandingReputationManagement from '../src/componests/services/BrandingReputationManagement';
 
+
+import PrivacyPolicy from '../src/componests/terms/PrivacyPolicy.jsx';
+import TermsAndConditions from '../src/componests/terms/TermsAndConditions.jsx';
+import CancellationRefundPolicy from '../src/componests/terms/CancellationRefundPolicy.jsx';
+import SecureCardTransmissionPolicy from '../src/componests/terms/SecureCardTransmissionPolicy.jsx';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -56,6 +66,17 @@ function App() {
         <Route path="/services/social-media-marketing" element={<SocialMediaMarketing />} />
         <Route path="/services/website-development" element={<WebsiteDevelopment />} />
         <Route path="/services/ai-marketing-automation" element={<AIMarketingAutomation />} />
+        <Route path="/services/AnalyticsReporting" element={<AnalyticsReporting />} />
+        <Route path="/services/ContentMarketing" element={<ContentMarketing />} />
+        <Route path="/services/EmailMarketing" element={<EmailMarketing />} />
+        <Route path="/services/PayPerClickAdvertising" element={<PayPerClickAdvertising />} />
+          <Route path="/services/BrandingReputationManagement" element={<BrandingReputationManagement />} />
+          
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-conditions" element={<TermsAndConditions />} />
+          <Route path="/cancellation-refund-policy" element={<CancellationRefundPolicy />} />
+          <Route path="/secure-card-transmission-policy" element={<SecureCardTransmissionPolicy/>} />
+
         </Routes>
       </div>
     </Router>

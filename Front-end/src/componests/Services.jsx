@@ -20,6 +20,7 @@ const Services = () => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setVisibleElements((prev) => new Set([...prev, entry.target.id]));
+            console.log(`Element visible: ${entry.target.id}`);
           }
         });
       },
@@ -34,13 +35,11 @@ const Services = () => {
       servicesRef.current,
       processRef.current,
       ctaRef.current,
-    ];
+    ].filter(el => el);
 
     elementsToObserve.forEach((el, index) => {
-      if (el) {
-        el.id = `section-${index}`;
-        observer.observe(el);
-      }
+      el.id = `section-${index}`;
+      observer.observe(el);
     });
 
     const cards = document.querySelectorAll('.animate-on-scroll');
@@ -209,7 +208,7 @@ const Services = () => {
         }
       `}</style>
 
-      {/* Enhanced Dynamic Background */}
+      {/* Dynamic Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute inset-0">
           <div
@@ -225,7 +224,6 @@ const Services = () => {
             style={{ animation: 'pulse 10s ease-in-out infinite 4s' }}
           />
         </div>
-
         {[...Array(30)].map((_, i) => (
           <FloatingParticle
             key={i}
@@ -234,20 +232,19 @@ const Services = () => {
             duration={Math.random() * 4 + 3}
           />
         ))}
-
         <GlowingOrb size={200} color="purple" position={{ top: '10%', left: '10%' }} />
-        <GlowingOrb size={150} color="blue" position={{ top: '70%', right: '10%' }} />
+        <GlowingOrb size={150} color="blue" position={{ bottom: '20%', right: '15%' }} />
       </div>
 
       <Navbar />
 
-      {/* Enhanced Hero Section */}
+      {/* Hero Section */}
       <div
         ref={heroRef}
-        className="relative z-10 flex flex-col items-center justify-center text-center text-white min-h-screen px-4 pt-20"
+        className="relative z-10 flex flex-col items-center justify-center text-center text-white min-h-screen px-4 sm:px-6 lg:px-8 pt-20"
       >
-        <div
-          className={`text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent animate-hero-title ${
+        <h1
+          className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent animate-hero-title ${
             isVisible('section-0') ? 'visible' : ''
           }`}
           style={{ 
@@ -256,124 +253,170 @@ const Services = () => {
           }}
         >
           Our Services
-        </div>
-
+        </h1>
         <p
-          className={`text-lg md:text-xl mb-12 max-w-4xl leading-relaxed text-gray-300 animate-bounce-in stagger-1 ${
+          className={`text-base sm:text-lg md:text-xl lg:text-2xl mb-12 max-w-4xl leading-relaxed text-gray-300 animate-bounce-in stagger-1 ${
             isVisible('section-0') ? 'visible' : ''
           }`}
         >
-          Discover our comprehensive suite of AI-powered digital marketing solutions designed to transform your business
-          and drive exponential growth in the digital landscape.
+          Comprehensive digital marketing solutions tailored to grow your online presence and achieve measurable results.
         </p>
-
         <button
           onClick={navigateToContact}
-          className={`bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-full transition-all duration-500 hover:scale-110 animate-glow animate-bounce-in stagger-2 ${
+          className={`bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-full transition-all duration-500 hover:scale-110 animate-glow animate-bounce-in stagger-2 ${
             isVisible('section-0') ? 'visible' : ''
           }`}
           style={{ 
-            boxShadow: '0 10px 30px rgba(59, 130, 246, 0.3)',
-            transform: 'translateY(0)',
+            boxShadow: '0 10px 30px rgba(59, 130, 246, 0.3)'
           }}
         >
           Start Your Journey
         </button>
       </div>
 
-      {/* Enhanced Services Section */}
-      <div ref={servicesRef} className="relative z-10 py-20 px-4">
-        <h3
-          className={`text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent animate-bounce-in ${
+      {/* Services Section */}
+      <div ref={servicesRef} className="relative z-10 py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
+        <h2
+          className={`text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-12 sm:mb-16 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent animate-bounce-in ${
             isVisible('section-1') ? 'visible' : ''
           }`}
         >
-          Explore Our Premium Services
-        </h3>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          Explore Our Services
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-7xl mx-auto">
           {[
             {
-              title: 'SEO Optimization',
-              desc: 'Dominate search rankings with our advanced SEO strategies powered by AI analytics and data-driven insights.',
-              icon: '🚀',
+              title: 'Search Engine Optimization',
+              desc: 'Improve organic search rankings with advanced SEO strategies.',
+              icon: '🔍',
               features: [
-                'Keyword Research & Analysis',
                 'On-Page Optimization',
-                'Technical SEO Audits',
-                'Content Strategy',
-                'Link Building',
+                'Off-Page Optimization',
+                'Keyword Research',
+                'Technical SEO',
+                'Local SEO'
               ],
-              path: '/services/seo-optimization',
-            },
-            {
-              title: 'Graphic Design',
-              desc: 'Create stunning visual identities that captivate audiences and drive engagement across all platforms.',
-              icon: '🎨',
-              features: ['Logo Design', 'Brand Identity', 'Social Media Graphics', 'Print Materials', 'Web Design'],
-              path: '/services/graphic-design',
-            },
-            {
-              title: 'Google My Business',
-              desc: 'Maximize local visibility and attract high-quality customers with optimized GMB profiles and management.',
-              icon: '📍',
-              features: ['Profile Optimization', 'Review Management', 'Local SEO', 'Post Scheduling', 'Analytics Tracking'],
-              path: '/services/google-my-business',
+              path: '/services/seo-optimization'
             },
             {
               title: 'Social Media Marketing',
-              desc: 'Build powerful social presence with strategic content creation and community management.',
+              desc: 'Build a powerful social presence with strategic content and engagement.',
               icon: '📱',
               features: [
                 'Content Creation',
                 'Community Management',
-                'Paid Advertising',
-                'Influencer Partnerships',
-                'Analytics & Reporting',
+                'Paid Campaigns',
+                'Platform Strategy',
+                'Engagement Analytics'
               ],
-              path: '/services/social-media-marketing',
+              path: '/services/social-media-marketing'
             },
             {
-              title: 'Website Development',
-              desc: 'Create responsive, high-performance websites that convert visitors into customers.',
+              title: 'Pay-Per-Click Advertising',
+              desc: 'Drive targeted traffic with optimized PPC campaigns across platforms.',
+              icon: '📈',
+              features: [
+                'Google Ads',
+                'Bing Ads',
+                'Social Media Ads',
+                'Audience Targeting',
+                'Budget Optimization'
+              ],
+              path: '/services/PayPerClickAdvertising'
+            },
+            {
+              title: 'Content Marketing',
+              desc: 'Attract and convert audiences with high-quality, engaging content.',
+              icon: '✍️',
+              features: [
+                'Blog Posts',
+                'Articles',
+                'Infographics',
+                'Videos',
+                'Press Releases'
+              ],
+              path: '/services/ContentMarketing'
+            },
+            {
+              title: 'Email Marketing',
+              desc: 'Nurture leads and drive conversions with targeted email campaigns.',
+              icon: '📧',
+              features: [
+                'Campaign Setup',
+                'List Management',
+                'Automation',
+                'Analytics',
+                'Personalized Emails'
+              ],
+              path: '/services/EmailMarketing'
+            },
+            {
+              title: 'Website Design & Development',
+              desc: 'Create responsive, high-performance websites tailored to your goals.',
               icon: '💻',
               features: [
                 'Responsive Design',
                 'E-commerce Solutions',
                 'CMS Development',
                 'Performance Optimization',
-                'Security Implementation',
+                'Security Implementation'
               ],
-              path: '/services/website-development',
+              path: '/services/website-development'
             },
             {
-              title: 'AI Marketing Automation',
-              desc: 'Leverage cutting-edge AI technology to automate and optimize your marketing campaigns.',
-              icon: '🤖',
+              title: 'Analytics & Reporting',
+              desc: 'Track performance and gain insights with advanced analytics tools.',
+              icon: '📊',
               features: [
-                'Email Automation',
-                'Lead Scoring',
-                'Predictive Analytics',
-                'Chatbot Development',
-                'Customer Journey Mapping',
+                'Google Analytics',
+                'Search Console',
+                'Custom Reports',
+                'Performance Tracking',
+                'Data Insights'
               ],
-              path: '/services/ai-marketing-automation',
+              path: '/services/AnalyticsReporting'
             },
+            {
+              title: 'Branding & Online Reputation Management',
+              desc: 'Build and maintain a positive digital brand identity.',
+              icon: '🌟',
+              features: [
+                'Brand Identity Development',
+                'Online Review Management',
+                'Reputation Monitoring',
+                'Crisis Management',
+                'Feedback Analysis'
+              ],
+              path: '/services/BrandingReputationManagement'
+            },
+            {
+            "title": "Google My Business",
+            "desc": "Optimize your local presence and attract more customers.",
+            "icon": "📍",
+            "features": [
+              "Profile Optimization",
+              "Review Management",
+              "Local SEO Enhancement",
+              "Post Scheduling",
+              "Performance Tracking"
+            ],
+            "path": "/services/GoogleMyBusiness"
+          }
+            
           ].map((service, index) => (
             <div
               key={index}
               id={`service-${index}`}
-              className={`service-card bg-gradient-to-br from-gray-900/60 to-blue-900/60 backdrop-blur-md rounded-3xl p-8 text-white text-center border border-blue-600/40 card-hover animate-fade-scale stagger-${
+              className={`service-card bg-gradient-to-br from-gray-900/60 to-blue-900/60 backdrop-blur-md rounded-3xl p-6 sm:p-8 text-white text-center border border-blue-600/40 card-hover animate-fade-scale stagger-${
                 index + 1
               } ${isVisible('section-1') ? 'visible' : ''}`}
               style={{ 
-                boxShadow: '0 10px 30px rgba(59, 130, 246, 0.2)',
+                boxShadow: '0 10px 30px rgba(59, 130, 246, 0.2)'
               }}
             >
-              <div className="service-icon text-6xl mb-6 transform transition-all duration-300">{service.icon}</div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-300">{service.title}</h3>
-              <p className="text-gray-300 mb-6 leading-relaxed">{service.desc}</p>
-
+              <div className="service-icon text-4xl sm:text-5xl mb-6 transform transition-all duration-300">{service.icon}</div>
+              <h3 className="text-xl sm:text-2xl font-bold mb-4 text-gray-300">{service.title}</h3>
+              <p className="text-sm sm:text-base text-gray-300 mb-6 leading-relaxed">{service.desc}</p>
               <div className="space-y-4 mb-8">
                 {service.features.map((feature, featureIndex) => (
                   <div 
@@ -381,14 +424,13 @@ const Services = () => {
                     className={`flex items-center space-x-3 animate-slide-left stagger-${featureIndex + 1} ${isVisible('section-1') ? 'visible' : ''}`}
                   >
                     <div
-                      className="w-4 h-4 bg-blue-600 rounded-full animate-pulse"
+                      className="w-2 h-2 bg-blue-600 rounded-full animate-pulse"
                       style={{ animationDelay: `${featureIndex * 0.2}s` }}
                     ></div>
-                    <span className="text-lg text-gray-300">{feature}</span>
+                    <span className="text-sm sm:text-base text-gray-300">{feature}</span>
                   </div>
                 ))}
               </div>
-
               <div className="flex flex-col space-y-4">
                 <Link
                   to={service.path}
@@ -408,26 +450,25 @@ const Services = () => {
         </div>
       </div>
 
-      {/* Enhanced Process Section */}
+      {/* Process Section */}
       <div
         ref={processRef}
-        className="relative z-10 py-20 px-4 bg-gradient-to-r from-purple-900/30 to-blue-900/30"
+        className="relative z-10 py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-purple-900/30 to-blue-900/30"
       >
         <h2
-          className={`text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent animate-bounce-in ${
+          className={`text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-12 sm:mb-16 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent animate-bounce-in ${
             isVisible('section-2') ? 'visible' : ''
           }`}
         >
           Our Process
         </h2>
-
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
             {[
-              { step: '01', title: 'Discovery', desc: 'We analyze your business goals and target audience' },
-              { step: '02', title: 'Strategy', desc: 'We create a customized digital marketing plan' },
-              { step: '03', title: 'Implementation', desc: 'We execute the strategy with precision' },
-              { step: '04', title: 'Optimization', desc: 'We continuously improve and scale results' },
+              { step: '01', title: 'Discovery', desc: 'We analyze your business goals and target audience.' },
+              { step: '02', title: 'Strategy', desc: 'We create a customized digital marketing plan.' },
+              { step: '03', title: 'Implementation', desc: 'We execute the strategy with precision.' },
+              { step: '04', title: 'Optimization', desc: 'We continuously improve and scale results.' }
             ].map((process, index) => (
               <div
                 key={index}
@@ -436,36 +477,36 @@ const Services = () => {
                   isVisible('section-2') ? 'visible' : ''
                 }`}
                 style={{ 
-                  boxShadow: '0 10px 30px rgba(59, 130, 246, 0.2)',
+                  boxShadow: '0 10px 30px rgba(59, 130, 246, 0.2)'
                 }}
               >
-                <div className="w-20 h-20 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4 animate-glow">
+                <div className="w-16 h-16 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full flex items-center justify-center text-xl sm:text-2xl font-bold mx-auto mb-4 animate-glow">
                   {process.step}
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-gray-300">{process.title}</h3>
-                <p className="text-gray-300">{process.desc}</p>
+                <h3 className="text-lg sm:text-xl font-bold mb-3 text-gray-300">{process.title}</h3>
+                <p className="text-sm sm:text-base text-gray-300">{process.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Enhanced Call to Action Section */}
-      <div ref={ctaRef} className="relative z-10 py-20 px-4">
+      {/* Call to Action Section */}
+      <div ref={ctaRef} className="relative z-10 py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
         <div
           className={`max-w-4xl mx-auto text-center text-white animate-bounce-in ${
             isVisible('section-3') ? 'visible' : ''
           }`}
         >
           <h2 
-            className={`text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent animate-bounce-in stagger-1 ${
+            className={`text-3xl sm:text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent animate-bounce-in stagger-1 ${
               isVisible('section-3') ? 'visible' : ''
             }`}
           >
             Ready to Transform Your Business?
           </h2>
           <p 
-            className={`text-xl mb-8 text-gray-300 animate-slide-left stagger-2 ${
+            className={`text-base sm:text-lg md:text-xl mb-8 text-gray-300 animate-slide-left stagger-2 ${
               isVisible('section-3') ? 'visible' : ''
             }`}
           >
@@ -473,12 +514,11 @@ const Services = () => {
           </p>
           <button
             onClick={navigateToContact}
-            className={`bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-full transition-all duration-500 hover:scale-110 animate-glow animate-bounce-in stagger-3 ${
+            className={`bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-full transition-all duration-500 hover:scale-110 animate-glow animate-bounce-in stagger-3 ${
               isVisible('section-3') ? 'visible' : ''
             }`}
             style={{ 
-              boxShadow: '0 10px 30px rgba(59, 130, 246, 0.3)',
-              transform: 'translateY(0)',
+              boxShadow: '0 10px 30px rgba(59, 130, 246, 0.3)'
             }}
           >
             Get Free Consultation
