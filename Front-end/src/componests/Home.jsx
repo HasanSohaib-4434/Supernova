@@ -310,7 +310,7 @@ const Home = () => {
         <p 
           className={`text-lg md:text-xl mb-12 max-w-4xl leading-relaxed text-gray-300 animate-slide-left stagger-3 ${isVisible('section-0') ? 'visible' : ''}`}
         >
-          At Novatec Sol, we're dedicated to elevating your online presence with cutting-edge solutions. 
+          At Supernova Solutions, we're dedicated to elevating your online presence with cutting-edge solutions. 
           Transform your digital landscape with our innovative strategies that drive exponential growth and unlock 
           unprecedented potential for your business in the digital age.
         </p>
@@ -495,7 +495,7 @@ const Home = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {[
-            { review: "Absolutely revolutionary! Novatec Sol transformed our digital presence beyond our wildest expectations. The strategies delivered phenomenal results!", author: "Sarah Johnson", rating: 5 },
+            { review: "Absolutely revolutionary! Supernova Solutions transformed our digital presence beyond our wildest expectations. The strategies delivered phenomenal results!", author: "Sarah Johnson", rating: 5 },
             { review: "Outstanding service and incredible results. The team's expertise in digital marketing is unmatched. Highly recommend for serious business growth!", author: "Michael Chen", rating: 5 },
           ].map((testimonial, index) => (
             <div

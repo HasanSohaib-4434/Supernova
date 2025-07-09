@@ -229,7 +229,7 @@ const Testimonials = () => {
         <p 
           className={`text-base sm:text-lg md:text-xl lg:text-2xl mb-12 max-w-4xl leading-relaxed text-gray-300 animate-bounce-in stagger-1 ${isVisible('section-0') ? 'visible' : ''}`}
         >
-          Discover what our clients say about their transformative experiences with Novatec Sol’s AI-powered digital solutions.
+          Discover what our clients say about their transformative experiences with Supernova Sol’s digital solutions.
         </p>
       </div>
 
@@ -245,7 +245,7 @@ const Testimonials = () => {
             {
               name: "Emily Carter",
               role: "CEO, TechTrend Innovations",
-              quote: "Novatec Sol revolutionized our digital marketing with AI-driven strategies. Our ROI tripled in just six months!",
+              quote: "Supernova Solutions revolutionized our digital marketing with AI-driven strategies. Our ROI tripled in just six months!",
               avatar: "👩‍💼",
               rating: 5
             },
@@ -259,7 +259,7 @@ const Testimonials = () => {
             {
               name: "Sophia Nguyen",
               role: "Marketing Director, Visionary Brands",
-              quote: "Working with Novatec Sol was a game-changer. Their innovative solutions gave us a competitive edge.",
+              quote: "Working with Supernova Solutions was a game-changer. Their innovative solutions gave us a competitive edge.",
               avatar: "👩‍🎓",
               rating: 5
             }
@@ -293,7 +293,7 @@ const Testimonials = () => {
             Ready to Write Your Success Story?
           </h2>
           <p className={`text-base sm:text-lg md:text-xl mb-8 text-gray-300 animate-slide-left stagger-2 ${isVisible('section-2') ? 'visible' : ''}`}>
-            Join our satisfied clients and transform your business with Novatec Sol. Contact us today!
+            Join our satisfied clients and transform your business with Supernova Solutions. Contact us today!
           </p>
           <Link
             to="/contact"
