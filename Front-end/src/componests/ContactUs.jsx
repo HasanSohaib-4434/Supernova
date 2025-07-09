@@ -1,21 +1,17 @@
 import { useState, useEffect, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from './Navbar.jsx';
-import Footer from './Footer.jsx';
 
 const ContactUs = () => {
   const [scrollY, setScrollY] = useState(0);
   const [visibleElements, setVisibleElements] = useState(new Set());
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
-  const [formStatus, setFormStatus] = useState(null);
 
   const heroRef = useRef(null);
-  const formRef = useRef(null);
   const infoRef = useRef(null);
   const ctaRef = useRef(null);
+  const servicesRef = useRef(null);
+    const navigate = useNavigate();
+
 
   // Intersection Observer setup for all sections
   useEffect(() => {
@@ -24,7 +20,6 @@ const ContactUs = () => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setVisibleElements(prev => new Set([...prev, entry.target.id]));
-            console.log(`Element visible: ${entry.target.id}`); // Debugging log
           }
         });
       },
@@ -36,9 +31,9 @@ const ContactUs = () => {
 
     const elementsToObserve = [
       heroRef.current,
-      formRef.current,
       infoRef.current,
-      ctaRef.current
+      ctaRef.current,
+      servicesRef.current
     ];
 
     elementsToObserve.forEach((el, index) => {
@@ -59,49 +54,6 @@ const ContactUs = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  // Handle form input changes
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    // Basic validation
-    if (!formData.name || !formData.email || !formData.message) {
-      setFormStatus({ type: 'error', message: 'Please fill in all fields.' });
-      return;
-    }
-
-    try {
-      const response = await fetch('http://localhost:5000/send', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        setFormStatus({ type: 'success', message: 'Message sent successfully!' });
-        setFormData({ name: '', email: '', message: '' });
-      } else {
-        setFormStatus({ type: 'error', message: 'Failed to send message. Please try again.' });
-      }
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      setFormStatus({ type: 'error', message: 'An error occurred. Please try again later.' });
-    }
-  };
-
-  // Debugging log to confirm form rendering
-  useEffect(() => {
-    console.log('Form section rendered. FormData:', formData);
-    console.log('Form ref:', formRef.current);
-  }, [formData]);
 
   const FloatingParticle = ({ delay = 0, size = 2, duration = 3 }) => (
     <div
@@ -181,6 +133,18 @@ const ContactUs = () => {
           0% { transform: translateY(0) scale(1); }
           100% { transform: translateY(-15px) scale(1.05); }
         }
+        @keyframes morphing {
+          0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+          50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+        }
+        @keyframes floatingIcon {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-15px) rotate(5deg); }
+        }
+        @keyframes shimmer {
+          0% { background-position: -1000px 0; }
+          100% { background-position: 1000px 0; }
+        }
         .animate-glow {
           animation: glow 2s ease-in-out infinite;
         }
@@ -251,160 +215,234 @@ const ContactUs = () => {
           transform: scale(1.2) rotate(10deg);
           transition: all 0.3s ease;
         }
+        .morphing-bg {
+          animation: morphing 15s ease-in-out infinite;
+        }
+        .floating-icon {
+          animation: floatingIcon 3s ease-in-out infinite;
+        }
+        .shimmer {
+          background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.1),
+            transparent
+          );
+          background-size: 2000px 100%;
+          animation: shimmer 3s infinite;
+        }
+        .contact-button {
+          position: relative;
+          overflow: hidden;
+          background: linear-gradient(135deg, #8B5CF6, #3B82F6);
+          border-radius: 9999px;
+          padding: 1rem 2rem;
+          font-weight: bold;
+          color: white;
+          transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+          box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+        }
+        .contact-button:hover {
+          transform: translateY(-3px) scale(1.05);
+          box-shadow: 0 20px 40px rgba(59, 130, 246, 0.4);
+        }
+        .contact-button::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+          transition: left 0.5s;
+        }
+        .contact-button:hover::before {
+          left: 100%;
+        }
+        .service-card {
+          position: relative;
+          overflow: hidden;
+          background: linear-gradient(135deg, rgba(55, 65, 81, 0.6), rgba(37, 99, 235, 0.6));
+          backdrop-filter: blur(20px);
+          border-radius: 1.5rem;
+          padding: 2rem;
+          border: 1px solid rgba(59, 130, 246, 0.4);
+          transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .service-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(59, 130, 246, 0.1));
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+        .service-card:hover::before {
+          opacity: 1;
+        }
+        .service-card:hover {
+          transform: translateY(-10px) scale(1.02);
+          box-shadow: 0 25px 50px rgba(59, 130, 246, 0.3);
+        }
       `}</style>
 
       {/* Enhanced Dynamic Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute inset-0">
           <div
-            className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-gradient-to-r from-purple-600/30 to-blue-600/30 rounded-full filter blur-3xl animate-pulse"
-            style={{ animation: 'pulse 8s ease-in-out infinite' }}
+            className="absolute top-1/4 left-1/4 w-96 h-96 md:w-[500px] md:h-[500px] bg-gradient-to-r from-purple-600/30 to-blue-600/30 rounded-full filter blur-3xl animate-pulse morphing-bg"
+            style={{ animation: 'pulse 8s ease-in-out infinite, morphing 15s ease-in-out infinite' }}
           />
           <div
-            className="absolute top-3/4 right-1/4 w-[400px] h-[400px] bg-gradient-to-r from-blue-600/30 to-purple-600/30 rounded-full filter blur-3xl animate-pulse"
-            style={{ animation: 'pulse 6s ease-in-out infinite 2s' }}
+            className="absolute top-3/4 right-1/4 w-80 h-80 md:w-[400px] md:h-[400px] bg-gradient-to-r from-blue-600/30 to-purple-600/30 rounded-full filter blur-3xl animate-pulse morphing-bg"
+            style={{ animation: 'pulse 6s ease-in-out infinite 2s, morphing 12s ease-in-out infinite 3s' }}
           />
           <div
-            className="absolute top-1/2 left-1/2 w-[600px] h-[600px] bg-gradient-to-r from-purple-600/20 to-blue-600/20 rounded-full filter blur-3xl animate-pulse"
-            style={{ animation: 'pulse 10s ease-in-out infinite 4s' }}
+            className="absolute top-1/2 left-1/2 w-[500px] h-[500px] md:w-[600px] md:h-[600px] bg-gradient-to-r from-purple-600/20 to-blue-600/20 rounded-full filter blur-3xl animate-pulse morphing-bg"
+            style={{ animation: 'pulse 10s ease-in-out infinite 4s, morphing 20s ease-in-out infinite 1s' }}
           />
         </div>
 
-        {[...Array(30)].map((_, i) => (
+        {[...Array(40)].map((_, i) => (
           <FloatingParticle
             key={i}
             delay={Math.random() * 5}
-            size={Math.random() * 6 + 2}
-            duration={Math.random() * 4 + 3}
+            size={Math.random() * 8 + 2}
+            duration={Math.random() * 6 + 3}
           />
         ))}
 
-        <GlowingOrb size={200} color="purple" position={{ top: '10%', left: '10%' }} />
-        <GlowingOrb size={150} color="blue" position={{ top: '70%', right: '10%' }} />
+        <GlowingOrb size={250} color="purple" position={{ top: '10%', left: '5%' }} />
+        <GlowingOrb size={200} color="blue" position={{ top: '60%', right: '5%' }} />
+        <GlowingOrb size={180} color="purple" position={{ bottom: '20%', left: '20%' }} />
       </div>
 
-      <Navbar />
-
+  <Navbar />
       {/* Enhanced Hero Section */}
       <div
         ref={heroRef}
         className="relative z-10 flex flex-col items-center justify-center text-center text-white min-h-screen px-4 pt-20"
       >
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-20 left-10 text-6xl opacity-10 floating-icon">⚡</div>
+          <div className="absolute top-40 right-20 text-5xl opacity-10 floating-icon" style={{ animationDelay: '1s' }}>🚀</div>
+          <div className="absolute bottom-40 left-20 text-4xl opacity-10 floating-icon" style={{ animationDelay: '2s' }}>✨</div>
+        </div>
+
         <div
-          className={`text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent animate-hero-title ${
+          className={`text-4xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400 bg-clip-text text-transparent animate-hero-title ${
             isVisible('section-0') ? 'visible' : ''
           }`}
           style={{ 
             textShadow: '0 0 30px rgba(59, 130, 246, 0.6)',
-            animationDelay: '0.2s'
+            animationDelay: '0.2s',
+            backgroundSize: '200% 100%',
+            animation: 'heroTitle 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards, shimmer 3s infinite'
           }}
         >
-          Contact Us
+          Let's Connect & Create
         </div>
         
         <p
-          className={`text-lg md:text-xl mb-12 max-w-4xl leading-relaxed text-gray-300 animate-bounce-in stagger-1 ${
+          className={`text-lg md:text-xl lg:text-2xl mb-12 max-w-4xl leading-relaxed text-gray-300 animate-bounce-in stagger-1 ${
             isVisible('section-0') ? 'visible' : ''
           }`}
         >
-          We're here to help you transform your digital presence. Reach out to us today to discuss your needs and start your journey with Novatec Sol.
+          Ready to transform your digital presence? We're here to turn your vision into reality. Let's start an amazing journey together!
         </p>
 
-        <button
-          onClick={() => formRef.current.scrollIntoView({ behavior: 'smooth' })}
-          className={`bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-full transition-all duration-500 hover:scale-110 animate-glow animate-bounce-in stagger-2 ${
-            isVisible('section-0') ? 'visible' : ''
-          }`}
-          style={{ 
-            boxShadow: '0 10px 30px rgba(59, 130, 246, 0.3)',
-            transform: 'translateY(0)',
-          }}
-        >
-          Get in Touch
-        </button>
+        <div className={`flex flex-col sm:flex-row gap-4 animate-bounce-in stagger-2 ${isVisible('section-0') ? 'visible' : ''}`}>
+          <button
+            onClick={() => infoRef.current.scrollIntoView({ behavior: 'smooth' })}
+            className="contact-button"
+          >
+            Get Started Now
+          </button>
+          <button
+            onClick={() => servicesRef.current.scrollIntoView({ behavior: 'smooth' })}
+            className="contact-button"
+            style={{ 
+              background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(59, 130, 246, 0.2))',
+              border: '2px solid rgba(59, 130, 246, 0.5)'
+            }}
+          >
+            Our Services
+          </button>
+        </div>
       </div>
 
-      {/* Enhanced Form Section */}
+      {/* New Services Preview Section */}
       <div
-        ref={formRef}
+        ref={servicesRef}
         className="relative z-10 py-20 px-4"
       >
         <h2
-          className={`text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent animate-bounce-in ${
-            isVisible('section-1') ? 'visible' : ''
+          className={`text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent animate-bounce-in ${
+            isVisible('section-3') ? 'visible' : ''
           }`}
         >
-          Get in Touch
+          What We Do Best
         </h2>
         
-        <div
-          className={`max-w-3xl mx-auto bg-gradient-to-br from-gray-900/60 to-blue-900/60 backdrop-blur-md rounded-3xl p-8 border border-blue-600/40 card-hover animate-fade-scale ${
-            isVisible('section-1') ? 'visible' : ''
-          }`}
-          style={{ 
-            boxShadow: '0 10px 30px rgba(59, 130, 246, 0.2)',
-          }}
-        >
-          {formStatus && (
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {[
+            {
+              title: "Web Development",
+              description: "Cutting-edge websites that captivate and convert",
+              icon: "🌐",
+              gradient: "from-purple-500 to-blue-500"
+            },
+        {
+  title: "Google My Business",
+  description: "Boost local visibility with optimized listings",
+  icon: "📍",
+  gradient: "from-green-500 to-emerald-500"
+},
+            {
+  title: "PPC Advertising",
+  description: "Drive targeted traffic through paid ads",
+  icon: "💰",
+  gradient: "from-pink-500 to-red-500"
+},
+           {
+  title: "SEO Optimization",
+  description: "Improve rankings and organic traffic",
+  icon: "🔍",
+  gradient: "from-yellow-500 to-orange-500"
+},
+           {
+  title: "Social Media Marketing",
+  description: "Boost brand presence across platforms",
+  icon: "📣",
+  gradient: "from-purple-500 to-pink-500"
+},
+           {
+  title: "Email Marketing",
+  description: "Engage customers with targeted emails",
+  icon: "📧",
+  gradient: "from-yellow-500 to-orange-500"
+}
+
+          ].map((service, index) => (
             <div
-              className={`mb-4 text-center font-semibold animate-slide-left stagger-1 ${
-                isVisible('section-1') ? 'visible' : ''
-              } ${formStatus.type === 'error' ? 'text-red-200 bg-red-900/50 p-2 rounded' : 'text-green-200 bg-green-900/50 p-2 rounded'}`}
+              key={index}
+              className={`service-card animate-fade-scale stagger-${index + 1} ${
+                isVisible('section-3') ? 'visible' : ''
+              }`}
             >
-              {formStatus.message}
-            </div>
-          )}
-          <form onSubmit={handleSubmit} method="POST">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className={`animate-slide-left stagger-2 ${isVisible('section-1') ? 'visible' : ''}`}>
-                <label htmlFor="name" className="block text-white font-semibold mb-2">Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  className="w-full bg-gray-800 border border-blue-600/30 rounded-lg p-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all animate-glow"
-                  placeholder="Your Name"
-                  required
-                />
-              </div>
-              <div className={`animate-slide-right stagger-2 ${isVisible('section-1') ? 'visible' : ''}`}>
-                <label htmlFor="email" className="block text-white font-semibold mb-2">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className="w-full bg-gray-800 border border-blue-600/30 rounded-lg p-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all animate-glow"
-                  placeholder="Your Email"
-                  required
-                />
+              <div className="relative z-10">
+                <div className={`text-4xl mb-4 floating-icon`} style={{ animationDelay: `${index * 0.2}s` }}>
+                  {service.icon}
+                </div>
+                <h3 className="text-xl font-bold mb-3 text-white">{service.title}</h3>
+                <p className="text-gray-300 mb-4">{service.description}</p>
+                <div className={`w-full h-1 bg-gradient-to-r ${service.gradient} rounded-full`}></div>
               </div>
             </div>
-            <div className={`mt-6 animate-slide-left stagger-3 ${isVisible('section-1') ? 'visible' : ''}`}>
-              <label htmlFor="message" className="block text-white font-semibold mb-2">Message</label>
-              <textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleInputChange}
-                className="w-full bg-gray-800 border border-blue-600/30 rounded-lg p-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all animate-glow"
-                rows="5"
-                placeholder="Your Message"
-                required
-              />
-            </div>
-            <div className={`mt-8 text-center animate-bounce-in stagger-4 ${isVisible('section-1') ? 'visible' : ''}`}>
-              <button
-                type="submit"
-                className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-3 px-8 rounded-full transition-all duration-500 hover:scale-110 animate-glow"
-              >
-                Send Message
-              </button>
-            </div>
-          </form>
+          ))}
         </div>
       </div>
 
@@ -414,52 +452,65 @@ const ContactUs = () => {
         className="relative z-10 py-20 px-4 bg-gradient-to-r from-purple-900/30 to-blue-900/30"
       >
         <h2
-          className={`text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent animate-bounce-in ${
-            isVisible('section-2') ? 'visible' : ''
+          className={`text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent animate-bounce-in ${
+            isVisible('section-1') ? 'visible' : ''
           }`}
         >
-          Contact Information
+          Ready to Connect?
         </h2>
         
-        <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
             {
-              title: "Phone",
+              title: "Call Us",
               value: "+1 (646) 930-8617",
+              description: "Let's talk about your project",
               icon: "📞",
-              action: "tel:+16469308617"
+              action: "tel:+16469308617",
+              gradient: "from-green-500 to-emerald-500"
             },
             {
-              title: "Email",
-              value: "info@novatecsol.com",
+              title: "Email Us",
+              value: "info@nsupernovasolutions.com",
+              description: "Send us your requirements",
               icon: "📧",
-              action: "mailto:info@novatecsol.com"
+              action: "mailto:info@supernovasolutions.com?subject=Project%20Inquiry",
+              gradient: "from-blue-500 to-cyan-500"
             },
             {
-              title: "Social Media",
-              value: "Follow Us",
+              title: "Follow Us",
+              value: "Stay Connected",
+              description: "Join our growing community",
               icon: "🌐",
-              action: "#"
+              action: "#",
+              gradient: "from-purple-500 to-pink-500"
             }
           ].map((info, index) => (
             <div
               key={index}
-              id={`info-${index}`}
-              className={`info-card bg-gradient-to-br from-gray-900/60 to-blue-900/60 backdrop-blur-md rounded-3xl p-6 text-white text-center border border-blue-600/40 card-hover animate-fade-scale stagger-${index + 1} ${
-                isVisible('section-2') ? 'visible' : ''
+              className={`info-card bg-gradient-to-br from-gray-900/80 to-blue-900/80 backdrop-blur-md rounded-3xl p-8 text-white text-center border border-blue-600/40 card-hover animate-fade-scale stagger-${index + 1} ${
+                isVisible('section-1') ? 'visible' : ''
               }`}
               style={{ 
-                boxShadow: '0 10px 30px rgba(59, 130, 246, 0.2)',
+                boxShadow: '0 15px 35px rgba(59, 130, 246, 0.2)',
               }}
             >
-              <div className="info-icon text-5xl mb-4 transform transition-all duration-300">{info.icon}</div>
-              <h3 className="text-xl font-bold mb-2 text-gray-300">{info.title}</h3>
-              <p className="text-gray-300 mb-4">{info.value}</p>
+              <div className="relative">
+                <div className={`info-icon text-6xl mb-6 floating-icon`} style={{ animationDelay: `${index * 0.3}s` }}>
+                  {info.icon}
+                </div>
+                <div className={`absolute inset-0 bg-gradient-to-r ${info.gradient} opacity-20 rounded-full blur-xl`}></div>
+              </div>
+              
+              <h3 className="text-2xl font-bold mb-3 text-gray-200">{info.title}</h3>
+              <p className="text-lg font-semibold mb-2 text-white">{info.value}</p>
+              <p className="text-gray-400 mb-6 text-sm">{info.description}</p>
+              
               <a
                 href={info.action}
-                className="inline-block bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold py-2 px-6 rounded-full transition-all duration-300 hover:scale-105 animate-glow"
+                className={`inline-block bg-gradient-to-r ${info.gradient} hover:shadow-lg hover:shadow-blue-500/25 text-white font-semibold py-3 px-8 rounded-full transition-all duration-300 hover:scale-105 animate-glow`}
               >
-                {info.title === "Social Media" ? "Connect" : "Contact"}
+                {info.title === "Follow Us" ? "Connect" : "Contact Now"}
               </a>
             </div>
           ))}
@@ -471,41 +522,66 @@ const ContactUs = () => {
         ref={ctaRef}
         className="relative z-10 py-20 px-4"
       >
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 to-blue-600/10 rounded-3xl blur-3xl"></div>
+        
         <div
-          className={`max-w-4xl mx-auto text-center text-white animate-bounce-in ${
-            isVisible('section-3') ? 'visible' : ''
+          className={`max-w-5xl mx-auto text-center text-white relative z-10 animate-bounce-in ${
+            isVisible('section-2') ? 'visible' : ''
           }`}
         >
+          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <div className="w-32 h-32 bg-gradient-to-r from-purple-600/30 to-blue-600/30 rounded-full blur-2xl animate-pulse"></div>
+          </div>
+          
           <h2
-            className={`text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent animate-bounce-in stagger-1 ${
-              isVisible('section-3') ? 'visible' : ''
+            className={`text-3xl md:text-4xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400 bg-clip-text text-transparent animate-bounce-in stagger-1 ${
+              isVisible('section-2') ? 'visible' : ''
             }`}
+            style={{ 
+              backgroundSize: '200% 100%',
+              animation: 'shimmer 3s infinite'
+            }}
           >
             Ready to Transform Your Business?
           </h2>
+          
           <p
-            className={`text-xl mb-8 text-gray-300 animate-slide-left stagger-2 ${
-              isVisible('section-3') ? 'visible' : ''
+            className={`text-lg md:text-xl lg:text-2xl mb-8 text-gray-300 max-w-3xl mx-auto animate-slide-left stagger-2 ${
+              isVisible('section-2') ? 'visible' : ''
             }`}
           >
-            Let’s discuss how Novatec Sol can elevate your digital presence. Contact us today!
+            Don't let your competitors get ahead. Let's build something extraordinary together and take your business to the next level!
           </p>
-          <button
-            onClick={() => formRef.current.scrollIntoView({ behavior: 'smooth' })}
-            className={`bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-full transition-all duration-500 hover:scale-110 animate-glow animate-bounce-in stagger-3 ${
-              isVisible('section-3') ? 'visible' : ''
-            }`}
-            style={{ 
-              boxShadow: '0 10px 30px rgba(59, 130, 246, 0.3)',
-              transform: 'translateY(0)',
-            }}
-          >
-            Start Your Journey
-          </button>
+          
+          <div className={`flex flex-col sm:flex-row gap-4 justify-center animate-bounce-in stagger-3 ${isVisible('section-2') ? 'visible' : ''}`}>
+            <button
+              onClick={() => window.location.href = 'tel:+16469308617'}
+              className="contact-button"
+            >
+              Call Now - Let's Talk!
+            </button>
+            <button
+              onClick={() => window.location.href = 'mailto:info@supernovasolutions.com?subject=Project%20Inquiry'}
+              className="contact-button"
+              style={{ 
+                background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(59, 130, 246, 0.3))',
+                border: '2px solid rgba(59, 130, 246, 0.6)'
+              }}
+            >
+              Email Us Today
+            </button>
+          </div>
         </div>
       </div>
 
-      <Footer />
+      {/* Footer would go here */}
+      <div className="relative z-10 py-20 px-4 bg-gradient-to-r from-purple-900/30 to-blue-900/30 backdrop-blur-md text-center text-white border-t border-blue-600/30">
+        <div className="max-w-6xl mx-auto">
+          <p className="text-gray-300 hover:text-transparent bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text transition-all duration-300 cursor-default">
+            Copyright © 2025 All Rights Reserved by Supernova Solutions - Transforming Digital Futures
+          </p>
+        </div>
+      </div>
     </div>
   );
 };

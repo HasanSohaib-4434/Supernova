@@ -288,7 +288,7 @@ const Home = () => {
             animationDelay: '0.2s'
           }}
         >
-          Supernova Sol
+          Supernova Sol.
         </div>
         
         <div 
@@ -301,19 +301,19 @@ const Home = () => {
           </span>
         </div>
 
-        <div 
+        {/* <div 
           className={`text-2xl md:text-4xl font-semibold mb-8 text-gray-300 animate-fade-scale stagger-2 ${isVisible('section-0') ? 'visible' : ''}`}
         >
           Innovative Digital Solutions Hub
-        </div>
-        
+        </div> */}
+{/*         
         <p 
           className={`text-lg md:text-xl mb-12 max-w-4xl leading-relaxed text-gray-300 animate-slide-left stagger-3 ${isVisible('section-0') ? 'visible' : ''}`}
         >
           At Supernova Solutions, we're dedicated to elevating your online presence with cutting-edge solutions. 
           Transform your digital landscape with our innovative strategies that drive exponential growth and unlock 
           unprecedented potential for your business in the digital age.
-        </p>
+        </p> */}
         
         <button 
           className={`bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-6 px-12 rounded-full transition-all duration-500 hover:scale-110 animate-glow animate-bounce-in stagger-4 ${isVisible('section-0') ? 'visible' : ''}`}
@@ -338,8 +338,9 @@ const Home = () => {
             <p 
               className={`text-lg md:text-xl text-gray-300 leading-relaxed mb-8 animate-slide-left stagger-1 ${isVisible('section-1') ? 'visible' : ''}`}
             >
-              We craft revolutionary strategies that drive unprecedented success through cutting-edge innovation and 
-              creative excellence, ensuring your brand dominates the digital landscape with unmatched presence and impact.
+             At Supernova Solutions, we're dedicated to elevating your online presence with cutting-edge solutions. 
+          Transform your digital landscape with our innovative strategies that drive exponential growth and unlock 
+          unprecedented potential for your business in the digital age.
             </p>
             <div className="space-y-4">
               <div 

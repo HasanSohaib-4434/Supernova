@@ -259,7 +259,7 @@ const Services = () => {
             isVisible('section-0') ? 'visible' : ''
           }`}
         >
-          Comprehensive digital marketing solutions tailored to grow your online presence and achieve measurable results.
+          Comprehensive digital marketing solutions tailored to grow your online presence and achieve impeccable results.
         </p>
         <button
           onClick={navigateToContact}

@@ -264,12 +264,12 @@ const AboutUs = () => {
             <h3 
               className={`text-xl sm:text-2xl font-bold mb-4 text-gray-300 animate-slide-left stagger-1 ${isVisible('section-1') ? 'visible' : ''}`}
             >
-              Who We Are
+              Who We Are?
             </h3>
             <p 
               className={`text-sm sm:text-base text-gray-300 leading-relaxed mb-6 animate-slide-left stagger-2 ${isVisible('section-1') ? 'visible' : ''}`}
             >
-              Founded in 2020, Supernova Solutions emerged with a vision to revolutionize digital marketing through artificial intelligence. Our team of experts combines technical prowess with creative excellence to deliver unparalleled results for businesses worldwide.
+              Founded in 2020, Supernova Solutions emerged with a vision to revolutionize digital marketing through unmatachable strategies. Our team of experts combines technical abilities with creative excellence to deliver unparalleled results for businesses worldwide.
             </p>
             <h3 
               className={`text-xl sm:text-2xl font-bold mb-4 text-gray-300 animate-slide-left stagger-3 ${isVisible('section-1') ? 'visible' : ''}`}
@@ -279,7 +279,7 @@ const AboutUs = () => {
             <p 
               className={`text-sm sm:text-base text-gray-300 leading-relaxed animate-slide-left stagger-4 ${isVisible('section-1') ? 'visible' : ''}`}
             >
-              We empower businesses to achieve exponential growth by leveraging cutting-edge AI technologies, innovative strategies, and a passion for transforming digital landscapes.
+              We empower businesses to achieve exponential growth by leveraging cutting-edge technologies, innovative strategies, and a passion for transforming digital landscapes.
             </p>
           </div>
           <div 
