@@ -26,6 +26,10 @@ import TermsAndConditions from '../src/componests/terms/TermsAndConditions.jsx';
 import CancellationRefundPolicy from '../src/componests/terms/CancellationRefundPolicy.jsx';
 import SecureCardTransmissionPolicy from '../src/componests/terms/SecureCardTransmissionPolicy.jsx';
 
+
+import Logo from '../src/componests/Logo.jsx';
+
+
 function ScrollToTop() {
   const { pathname } = useLocation();
 
@@ -76,6 +80,7 @@ function App() {
           <Route path="/terms-conditions" element={<TermsAndConditions />} />
           <Route path="/cancellation-refund-policy" element={<CancellationRefundPolicy />} />
           <Route path="/secure-card-transmission-policy" element={<SecureCardTransmissionPolicy/>} />
+                    <Route path="/logo" element={<Logo/>} />
 
         </Routes>
       </div>

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Navbar from './Navbar.jsx';
 import Footer from './Footer.jsx';
+import Logo from './Logo.jsx'
 
 const AboutUs = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -229,6 +230,8 @@ const AboutUs = () => {
       </div>
 
       <Navbar />
+            <Logo />
+
 
       {/* Hero Section */}
       <div ref={heroRef} className="relative z-10 flex flex-col items-center justify-center text-center text-white min-h-screen px-4 sm:px-6 lg:px-8 pt-20">

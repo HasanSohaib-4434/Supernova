@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from '../Navbar.jsx';
 import Footer from '../Footer.jsx';
+import Logo from '../Logo.jsx'
+
 
 const WebsiteDevelopment = () => {
   const navigate = useNavigate();

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from '../Navbar.jsx';
 import Footer from '../Footer.jsx';
+import Logo from '../Logo.jsx'
 
 const SecureCardTransmissionPolicy = () => {
   const navigate = useNavigate();
@@ -218,7 +219,7 @@ const SecureCardTransmissionPolicy = () => {
       </div>
 
       <Navbar />
-
+        <Logo/>
       {/* Hero Section */}
       <div
         ref={heroRef}

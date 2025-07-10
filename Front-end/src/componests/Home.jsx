@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import Navbar from './Navbar.jsx';
 import Footer from './Footer.jsx';
+import Logo from './Logo.jsx'
 
 const Home = () => {
   const [typewriterText, setTypewriterText] = useState("");
@@ -278,15 +279,15 @@ const Home = () => {
       </div>
 
       <Navbar />
-
+      <Logo />
+      
       {/* Enhanced Hero Section */}
       <div ref={heroRef} className="relative z-10 flex flex-col items-center justify-center text-center text-white min-h-screen px-4 pt-20">
         <div 
           className={`text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent animate-hero-title ${isVisible('section-0') ? 'visible' : ''}`}
           style={{ 
             textShadow: '0 0 30px rgba(59, 130, 246, 0.6)',
-            animationDelay: '0.2s'
-          }}
+            animationDelay: '0.2s'          }}
         >
           Supernova Sol.
         </div>
@@ -301,22 +302,9 @@ const Home = () => {
           </span>
         </div>
 
-        {/* <div 
-          className={`text-2xl md:text-4xl font-semibold mb-8 text-gray-300 animate-fade-scale stagger-2 ${isVisible('section-0') ? 'visible' : ''}`}
-        >
-          Innovative Digital Solutions Hub
-        </div> */}
-{/*         
-        <p 
-          className={`text-lg md:text-xl mb-12 max-w-4xl leading-relaxed text-gray-300 animate-slide-left stagger-3 ${isVisible('section-0') ? 'visible' : ''}`}
-        >
-          At Supernova Solutions, we're dedicated to elevating your online presence with cutting-edge solutions. 
-          Transform your digital landscape with our innovative strategies that drive exponential growth and unlock 
-          unprecedented potential for your business in the digital age.
-        </p> */}
         
         <button 
-          className={`bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-6 px-12 rounded-full transition-all duration-500 hover:scale-110 animate-glow animate-bounce-in stagger-4 ${isVisible('section-0') ? 'visible' : ''}`}
+          className={`mt-6 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-6 px-12 rounded-full transition-all duration-500 hover:scale-110 animate-glow animate-bounce-in stagger-4 ${isVisible('section-0') ? 'visible' : ''}`}
           style={{ 
             boxShadow: '0 10px 30px rgba(59, 130, 246, 0.3)',
             transform: 'translateY(0)',

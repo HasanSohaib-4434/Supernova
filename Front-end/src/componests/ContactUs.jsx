@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from './Navbar.jsx';
+import Logo from './Logo.jsx'
 
 const ContactUs = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -321,6 +322,8 @@ const ContactUs = () => {
       </div>
 
   <Navbar />
+        <Logo />
+  
       {/* Enhanced Hero Section */}
       <div
         ref={heroRef}
