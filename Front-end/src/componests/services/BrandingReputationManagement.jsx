@@ -220,7 +220,7 @@ const BrandingReputationManagement = () => {
       </div>
 
       <Navbar />
-
+      <Logo/>
       {/* Hero Section */}
       <div
         ref={heroRef}

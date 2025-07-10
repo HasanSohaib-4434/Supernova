@@ -288,11 +288,14 @@ const AboutUs = () => {
           <div 
             className={`relative animate-slide-right ${isVisible('section-1') ? 'visible' : ''}`}
           >
-            <div className="relative w-64 sm:w-80 h-64 sm:h-80 mx-auto">
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-700/30 to-blue-700/30 rounded-3xl backdrop-blur-md border border-blue-600/40 flex items-center justify-center transform hover:scale-105 transition-all duration-500">
-                <div className="text-center">
-                  <div className="w-24 sm:w-32 h-24 sm:h-32 mx-auto mb-4 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full animate-spin opacity-30" style={{ animationDuration: '8s' }}></div>
-                  <p className="text-gray-300 font-semibold text-lg sm:text-xl">Innovation Hub</p>
+           <div className="relative w-72 sm:w-80 md:w-96 aspect-square mx-auto">
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-700/30 to-blue-700/30 rounded-full backdrop-blur-md border border-blue-600/40 flex items-center justify-center transform hover:scale-105 transition-all duration-500 shadow-xl shadow-purple-800/20">
+                <div className="w-36 h-36 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-white shadow-md">
+                  <img
+                    src="/Logo.png"
+                    alt="Supervona Logo"
+                    className="w-full h-full object-contain"
+                  />
                 </div>
               </div>
             </div>

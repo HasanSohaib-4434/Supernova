@@ -220,7 +220,7 @@ const AnalyticsReporting = () => {
       </div>
 
       <Navbar />
-
+        <Logo/>
       {/* Hero Section */}
       <div
         ref={heroRef}

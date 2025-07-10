@@ -109,7 +109,7 @@ const Location = () => {
       `}</style>
 
       <Navbar />
-
+<Logo/>
       <div ref={heroRef} className="relative z-10 flex flex-col items-center justify-center text-center text-white min-h-screen px-4 pt-20">
         <div className={`text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent ${isVisible('section-0') ? 'animate-bounceIn' : ''}`}>Visit Us</div>
         <p className={`text-lg md:text-xl mb-12 max-w-4xl leading-relaxed text-gray-300 ${isVisible('section-0') ? 'animate-bounceIn' : ''}`}>

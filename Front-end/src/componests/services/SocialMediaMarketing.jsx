@@ -214,7 +214,7 @@ const SocialMediaMarketing = () => {
       </div>
 
       <Navbar />
-
+<Logo/>
       {/* Hero Section */}
       <div ref={heroRef} className="relative z-10 flex flex-col items-center justify-center text-center text-white min-h-screen px-4 sm:px-6 lg:px-8 pt-20">
         <h1 

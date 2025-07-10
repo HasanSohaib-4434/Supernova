@@ -56,8 +56,8 @@ const Footer = () => {
               <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-purple-400 to-blue-400 transition-all duration-300 group-hover:w-full"></div>
             </h4>
             <div className="space-y-2 sm:space-y-3">
-              <a href="tel:+16469308617" className="text-base sm:text-lg font-semibold hover:text-transparent bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text transition-all duration-300 cursor-pointer hover:scale-105 block">
-                +1 (646) 930-8617
+              <a href="tel:+14044009084" className="text-base sm:text-lg font-semibold hover:text-transparent bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text transition-all duration-300 cursor-pointer hover:scale-105 block">
+                +1 (404) 400-9084
               </a>
               <a href="mailto:info@Supernovasoltuions.com?subject=Inquiry%20from%20Website" className="text-gray-300 hover:text-transparent bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text transition-all duration-300 cursor-pointer hover:scale-105 text-sm sm:text-base block">
                 info@supernovasolutions.com

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from './Navbar.jsx';
 import Footer from './Footer.jsx';
+import Logo from './Logo.jsx'
 
 const Services = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -237,7 +238,7 @@ const Services = () => {
       </div>
 
       <Navbar />
-
+        <Logo/>
       {/* Hero Section */}
       <div
         ref={heroRef}

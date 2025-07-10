@@ -4,7 +4,6 @@ import Home from '../src/componests/Home';
 import Services from '../src/componests/Services';
 import AboutUs from '../src/componests/AboutUs';
 import ContactUs from '../src/componests/ContactUs';
-import Testimonials from '../src/componests/Testimonials';
 import Location from '../src/componests/Location';
 
 import SEOOptimization from '../src/componests/services/SEOOptimization';
@@ -62,7 +61,7 @@ function App() {
           <Route path="/services" element={<Services />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<ContactUs />} />
-          <Route path="/testimonials" element={<Testimonials />} />
+
           <Route path="/location" element={<Location />} />
           <Route path="/services/seo-optimization" element={<SEOOptimization />} />
         <Route path="/services/graphic-design" element={<GraphicDesign />} />
